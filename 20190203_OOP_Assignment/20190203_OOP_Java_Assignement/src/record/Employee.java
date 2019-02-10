@@ -1,6 +1,6 @@
-package people;
+package record;
 
-public class Employe 
+public class Employee 
 {
 	private String empID;
 	private String password;
@@ -23,23 +23,23 @@ public class Employe
 	}
 	
 	
-	public Employe()
+	public Employee()
 	{
 		
 	}
 	
-	public Employe(String name, String password)
+	public Employee(String name, String password)
 	{
 		this.name = name;
 		this.password = password;
 	}
 	
-	public Employe(String empID)
+	public Employee(String empID)
 	{
 		this.empID = empID;
 	}
 	
-	public Employe(String empID, String password, String name,String department, String position, UserRole userRole, Status status, String superiorID)
+	public Employee(String empID, String password, String name,String department, String position, UserRole userRole, Status status, String superiorID)
 	{
 		this.empID = empID;
 		this.password = password;

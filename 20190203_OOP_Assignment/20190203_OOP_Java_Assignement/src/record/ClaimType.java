@@ -1,6 +1,6 @@
-package people;
+package record;
 
-public class ClaimType
+public class ClaimType extends Employee
 {
 	private String claimTypeID;
 	private String claimTypeName;
