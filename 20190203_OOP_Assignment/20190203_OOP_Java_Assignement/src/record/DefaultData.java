@@ -112,7 +112,7 @@ public class DefaultData {
 		claimInfo = null;
 		
 		claimInfo.SetApplicableToPosition("Manager");
-		claimInfo.SetClaimTypeID("001");
+		claimInfo.SetClaimTypeID("004");
 		claimInfo.SetClaimTypeName("Vision loss");
 		claimInfo.SetLimit(50000);
 	}
