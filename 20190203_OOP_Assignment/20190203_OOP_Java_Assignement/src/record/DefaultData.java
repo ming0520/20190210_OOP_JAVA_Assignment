@@ -19,7 +19,7 @@ public class DefaultData {
 		empInfo = new Employee();
 		
 		empInfo.SetDepartment("Director");
-		empInfo.SetEmpID("IMS-D");
+		empInfo.SetEmpID("IMS-D-001");
 		empInfo.SetName("Terence");
 		empInfo.SetPassword("123");
 		empInfo.SetPosition("Chief of Director");
