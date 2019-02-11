@@ -7,62 +7,69 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		try (
-//				DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-//				Class.forName("com.mysql.cj.jdbc.Driver"); 
-		         // Step 1: Allocate a database 'Connection' object
-		         Connection conn = DriverManager.getConnection(
-		               "jdbc:mysql://localhst:3306/ebookshop?useSSL=false", "myuser", "xxxx"); // MySQL
-		 
-		         // Step 2: Allocate a 'Statement' object in the Connection
-		         Statement stmt = conn.createStatement();
-		      ) {
-		         // Step 3 & 4: Execute a SQL INSERT|DELETE statement via executeUpdate(),
-		         //   which returns an int indicating the number of rows affected.
-		 
-		         // DELETE records with id>=3000 and id<4000
-		         String sqlDelete = "delete from books where id>=3000 and id<4000";
-		         System.out.println("The SQL query is: " + sqlDelete);  // Echo for debugging
-		         int countDeleted = stmt.executeUpdate(sqlDelete);
-		         System.out.println(countDeleted + " records deleted.\n");
-		 
-		         // INSERT a record
-		         String sqlInsert = "insert into books " // need a space
-		               + "values (3001, 'Gone Fishing', 'Kumar', 11.11, 11)";
-		         System.out.println("The SQL query is: " + sqlInsert);  // Echo for debugging
-		         int countInserted = stmt.executeUpdate(sqlInsert);
-		         System.out.println(countInserted + " records inserted.\n");
-		 
-		         // INSERT multiple records
-		         sqlInsert = "insert into books values "
-		               + "(3002, 'Gone Fishing 2', 'Kumar', 22.22, 22),"
-		               + "(3003, 'Gone Fishing 3', 'Kumar', 33.33, 33)";
-		         System.out.println("The SQL query is: " + sqlInsert);  // Echo for debugging
-		         countInserted = stmt.executeUpdate(sqlInsert);
-		         System.out.println(countInserted + " records inserted.\n");
-		 
-		         // INSERT a partial record
-		         sqlInsert = "insert into books (id, title, author) "
-		               + "values (3004, 'Fishing 101', 'Kumar')";
-		         System.out.println("The SQL query is: " + sqlInsert);  // Echo for debugging
-		         countInserted = stmt.executeUpdate(sqlInsert);
-		         System.out.println(countInserted + " records inserted.\n");
-		 
-		         // Issue a SELECT to check the changes
-		         String strSelect = "select * from books";
-		         System.out.println("The SQL query is: " + strSelect);  // Echo For debugging
-		         ResultSet rset = stmt.executeQuery(strSelect);
-		         while(rset.next()) {   // Move the cursor to the next row
-		            System.out.println(rset.getInt("id") + ", "
-		                    + rset.getString("author") + ", "
-		                    + rset.getString("title") + ", "
-		                    + rset.getDouble("price") + ", "
-		                    + rset.getInt("qty"));
-		         }
-		      } catch(SQLException ex) {
-		         ex.printStackTrace();
-		      }
-		      // Step 5: Close the resources - Done automatically by try-with-resources
-	}
+		
+		try {
+			int pflag = 0, eflag = 0;
+			
+			Scanner input = new Scanner(System.in);
+			
+			Class.forName("com.mysql.jdbc.Driver"); 
+			Connection conn = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/ims?useTimezone=true&serverTimezone=UTC", "root", "");
+			Statement stmt = conn.createStatement();
+			
+			System.out.println("\tLOGIN");
+			System.out.println("--------------------");
+			
+			do {
+				System.out.print("Enter your employee ID: ");
+				
+				String id = input.nextLine();
+				
+				ResultSet rs = stmt.executeQuery("SELECT empID FROM empdetails");
+				while(rs.next()) {
+					String empID = rs.getString("empID");
+					if(id.equals(empID)) {
+						eflag = 1;
+						break;
+					}
+				}
+				
+				if(eflag == 0) {
+					System.out.println("Employee profile doesn't exist. Please enter again.");
+				}
+				else {
+					do {
+						System.out.print("Enter your password: ");
+						String pw = input.nextLine();
+
+						rs = stmt.executeQuery("SELECT pass,empID FROM empdetails WHERE empID = '" + id + "'");
+						
+						while(rs.next()) {
+							String pass = rs.getString("pass");
+							if(pw.equals(pass)) {
+								System.out.println("Password correct.");
+								pflag = 0;	
+								System.out.println();
+								//Administrator.Ad();
+								break;
+							}
+							else {
+								System.out.println("Password incorrect. Please enter again.");
+								pflag = 1;
+							}
+						}
+					}while(pflag == 1);
+				}
+			}while(eflag == 0);
+			
+			input.close();	
+			conn.close();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		}
 
 }
