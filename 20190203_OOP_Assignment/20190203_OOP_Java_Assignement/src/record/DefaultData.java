@@ -10,6 +10,7 @@ public class DefaultData {
 	public static ClaimType[] claimTypeList = new ClaimType [ARRAY_SIZE];
 	public static ClaimRecord[] claimRecord = new ClaimRecord[10000];
 	private Employee empInfo;
+	private ClaimType claimInfo;
 	
 	public DefaultData() {
 //		Construct Employee Record
@@ -87,7 +88,7 @@ public class DefaultData {
 		
 //		Construct Claim Type Record
 		
-		ClaimType claimInfo = new ClaimType();
+		claimInfo = new ClaimType();
 		
 		claimInfo.SetApplicableToPosition("CEO");
 		claimInfo.SetClaimTypeID("001");
@@ -96,9 +97,9 @@ public class DefaultData {
 		
 		claimInfo = null;
 		
-		claimInfo.SetApplicableToPosition("Manager");
+		claimInfo.SetApplicableToPosition("CEO");
 		claimInfo.SetClaimTypeID("002");
-		claimInfo.SetClaimTypeName("Vision loss");
+		claimInfo.SetClaimTypeName("DEATH OR TPD BENEFIT");
 		claimInfo.SetLimit(50000);
 		
 		claimInfo = null;
