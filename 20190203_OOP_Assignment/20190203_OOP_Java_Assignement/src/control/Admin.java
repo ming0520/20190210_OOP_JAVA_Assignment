@@ -47,19 +47,6 @@ public class Admin
 		System.out.println("*********************************************************");	
 	}
 	
-	public static void displayUserMenu() 
-	{
-		clearConsole();
-		System.out.println("*********************** User Menu ***********************");
-		System.out.println("* 1. Apply Claim					*");
-		System.out.println("* 2. Edit Claim     					*");
-		System.out.println("* 3. Cancel Claim					*");
-		System.out.println("* 3. Approve Claim					*");
-		System.out.println("* 4. Back To Main Menu                            	*");
-		System.out.println("* Enter the number and press <enter> to continue	*");
-		System.out.println("*********************************************************");	
-	}
-	
 	public static void displayEmployeeMenu()
 	{	
 		clearConsole();
@@ -173,24 +160,6 @@ public class Admin
 		input.close();
 	}
 	
-	public static void userClaimView()
-	{
-		Scanner input = new Scanner(System.in);
-		displayUserMenu();
-		
-		int choice = input.nextInt(); 
-		
-		switch(choice)
-		{
-			case 1: applyUserClaim();
-			case 2: editUserClaim();
-			case 3: cancelUserClaim();
-			case 4: approveUserClaim();
-			case 5: mainMenuView();
-		}
-		input.close();
-	}
-	
 	public static void adminClaimView()
 	{
 		Scanner input = new Scanner(System.in);
@@ -294,28 +263,8 @@ public class Admin
 		
 	}
 
-	// Claim (User)
+	// Program start
 	
-	public static void applyUserClaim()
-	{
-		
-	}
-	
-	public static void editUserClaim()
-	{
-		
-	}
-	
-	public static void cancelUserClaim()
-	{
-		
-	}
-	
-	public static void approveUserClaim()
-	{
-		
-	}
-
 	public static void main(String[] args) 
 	{
 		 mainMenuView();
