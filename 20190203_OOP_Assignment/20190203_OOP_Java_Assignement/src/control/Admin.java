@@ -90,21 +90,6 @@ public class Admin
 		System.out.println("*********************************************************");
 	}
 	
-	public static void mainMenuView()
-	{
-		Scanner input = new Scanner(System.in);
-		displayMainMenu();
-		
-		int choice = input.nextInt(); 
-		
-		switch(choice)
-		{
-			case 1: adminMenuView();
-			case 2: userClaimView();
-		}
-		input.close();
-	}
-	
 	public static void adminMenuView()
 	{
 		Scanner input = new Scanner(System.in);
@@ -117,7 +102,7 @@ public class Admin
 			case 1: adminEmployeeView();
 			case 2: adminClaimTypeView();
 			case 3: adminClaimView();
-			case 4: mainMenuView();
+			case 4: User.userClaimView();
 		}
 		input.close();
 	}
@@ -185,8 +170,18 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Enter employee id :");
+		System.out.println("Employee's ID£º");
 		String empID = input.nextLine();
+		System.out.println("Employee's Password£º");
+		String password = input.nextLine();
+		System.out.println("Employee's Name£º");
+		String name = input.nextLine();
+		System.out.println("Employee's Department£º");
+		String department = input.nextLine();
+		System.out.println("Employee's Position£º");
+		String position = input.nextLine();
+		
+		
 	}
 	
 	public static void editEmployee()
@@ -267,6 +262,6 @@ public class Admin
 	
 	public static void main(String[] args) 
 	{
-		 mainMenuView();
+		
 	}
 }

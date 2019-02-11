@@ -4,30 +4,9 @@ import java.util.Scanner;
 
 public class User 
 {
-	public final static void clearConsole()
-	{
-	    try
-	    {
-	        final String os = System.getProperty("os.name");
-
-	        if (os.contains("Windows"))
-	        {
-	            Runtime.getRuntime().exec("cls");
-	        }
-	        else
-	        {
-	            Runtime.getRuntime().exec("clear");
-	        }
-	    }
-	    catch (final Exception e)
-	    {
-	        //  Handle any exceptions.
-	    }
-	}
 	
 	public static void displayUserMenu() 
 	{
-		clearConsole();
 		System.out.println("*********************** User Menu ***********************");
 		System.out.println("* 1. Apply Claim					*");
 		System.out.println("* 2. Edit Claim     					*");
@@ -51,7 +30,6 @@ public class User
 			case 2: editUserClaim();
 			case 3: cancelUserClaim();
 			case 4: approveUserClaim();
-			case 5: mainMenuView();
 		}
 		input.close();
 	}
