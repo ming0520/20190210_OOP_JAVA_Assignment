@@ -105,7 +105,7 @@ public class DefaultData {
 		claimInfo = null;
 		
 		claimInfo.SetApplicableToPosition("Manager");
-		claimInfo.SetClaimTypeID("001");
+		claimInfo.SetClaimTypeID("003");
 		claimInfo.SetClaimTypeName("");
 		claimInfo.SetLimit(50000);
 		
