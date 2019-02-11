@@ -2,8 +2,8 @@ package control;
 
 import java.util.Scanner;
 
-public class Admin {
-	
+public class Admin
+{
 	public final static void clearConsole()
 	{
 	    try
@@ -25,75 +25,100 @@ public class Admin {
 	    }
 	}
 	
-	public void displayAdminMenu() 
+	public static void displayMainMenu()
 	{
 		clearConsole();
-		System.out.println("******************** Admin Menu *********************");
-		System.out.println("* 1. Employee Record								*");
-		System.out.println("* 2. Claim Type Record								*");
-		System.out.println("* 3. Claim Record									*");
-		System.out.println("* 4. Back To Main Menu                            	*");
+		System.out.println("*********************** Main Menu ***********************");
+		System.out.println("* 1. Admin Menu						*");
+		System.out.println("* 2. User Menu						*");
 		System.out.println("* Enter the number and press <enter> to continue	*");
-		System.out.println("*****************************************************");	
+		System.out.println("*********************************************************");	
 	}
 	
-	public void displayUserMenu() 
+	public static void displayAdminMenu() 
 	{
 		clearConsole();
-		System.out.println("********************* User Menu *********************");
-		System.out.println("* 1. Apply Claim								    *");
-		System.out.println("* 2. Edit Claim     							    *");
-		System.out.println("* 3. Cancel Claim									*");
-		System.out.println("* 3. Approve Claim									*");
-		System.out.println("* 4. Back To Main Menu                            	*");
+		System.out.println("********************** Admin Menu ***********************");
+		System.out.println("* 1. Employee Record					*");
+		System.out.println("* 2. Claim Type Record					*");
+		System.out.println("* 3. Claim Record					*");
+		System.out.println("* 4. Back To Main Menu              			*");
 		System.out.println("* Enter the number and press <enter> to continue	*");
-		System.out.println("*****************************************************");	
+		System.out.println("*********************************************************");	
 	}
 	
-	public void displayEmployeeMenu()
+	public static void displayUserMenu() 
+	{
+		clearConsole();
+		System.out.println("*********************** User Menu ***********************");
+		System.out.println("* 1. Apply Claim					*");
+		System.out.println("* 2. Edit Claim     					*");
+		System.out.println("* 3. Cancel Claim					*");
+		System.out.println("* 3. Approve Claim					*");
+		System.out.println("* 4. Back To Main Menu                            	*");
+		System.out.println("* Enter the number and press <enter> to continue	*");
+		System.out.println("*********************************************************");	
+	}
+	
+	public static void displayEmployeeMenu()
 	{	
 		clearConsole();
-		System.out.println("******************* Employee Menu *******************");
-		System.out.println("* 1. Add Employee									*");
-		System.out.println("* 2. Edit Employee									*");
-		System.out.println("* 3. Delete Employee								*");
-		System.out.println("* 4. View Employee									*");
-		System.out.println("* 5. Search Employee								*");
-		System.out.println("* 6. Back to Admin Menu								*");
+		System.out.println("********************* Employee Menu *********************");
+		System.out.println("* 1. Add Employee					*");
+		System.out.println("* 2. Edit Employee					*");
+		System.out.println("* 3. Delete Employee					*");
+		System.out.println("* 4. View Employee					*");
+		System.out.println("* 5. Search Employee					*");
+		System.out.println("* 6. Back to Admin Menu					*");
 		System.out.println("* Enter the number and press <enter> to continue	*");
-		System.out.println("*****************************************************");		
+		System.out.println("*********************************************************");		
 	}
 	
-	public void displayClaimMenu()
+	public static void displayClaimMenu()
 	{
 		clearConsole();
-		System.out.println("******************* Claim Menu **********************");
-		System.out.println("* 1. Add Claim										*");
-		System.out.println("* 2. Edit Claim										*");
-		System.out.println("* 3. Delete Claim									*");
-		System.out.println("* 4. View Claim										*");
-		System.out.println("* 5. Search Claim									*");
-		System.out.println("* 6. Back to Admin Menu								*");
+		System.out.println("********************* Claim Menu ************************");
+		System.out.println("* 1. Add Claim						*");
+		System.out.println("* 2. Edit Claim						*");
+		System.out.println("* 3. Delete Claim					*");
+		System.out.println("* 4. View Claim						*");
+		System.out.println("* 5. Search Claim					*");
+		System.out.println("* 6. Back to Admin Menu					*");
 		System.out.println("* Enter the number and press <enter> to continue	*");
-		System.out.println("*****************************************************");
+		System.out.println("*********************************************************");
 		
 	}
 	
-	public void displayClaimTypeMenu()
+	public static void displayClaimTypeMenu()
 	{
 		clearConsole();
-		System.out.println("****************** Claim Type Menu ******************");
-		System.out.println("* 1. Add Claim Type									*");
-		System.out.println("* 2. Edit Claim Type								*");
-		System.out.println("* 3. Delete Claim Type								*");
-		System.out.println("* 4. View Claim Type								*");
-		System.out.println("* 5. Search Claim Type								*");
-		System.out.println("* 6. Back to Admin Menu								*");
+		System.out.println("******************** Claim Type Menu ********************");
+		System.out.println("* 1. Add Claim Type					*");
+		System.out.println("* 2. Edit Claim Type					*");
+		System.out.println("* 3. Delete Claim Type					*");
+		System.out.println("* 4. View Claim Type					*");
+		System.out.println("* 5. Search Claim Type					*");
+		System.out.println("* 6. Back to Admin Menu					*");
 		System.out.println("* Enter the number and press <enter> to continue	*");
-		System.out.println("*****************************************************");
+		System.out.println("*********************************************************");
 	}
 	
-	public void adminMenuView()
+	public static void mainMenuView()
+	{
+		Scanner input = new Scanner(System.in);
+		displayMainMenu();
+		
+		int choice = input.nextInt(); 
+		
+		switch(choice)
+		{
+			case 1: adminMenuView();
+			case 2: userClaimView();
+		}
+		input.close();
+	}
+	
+	public static void adminMenuView()
 	{
 		Scanner input = new Scanner(System.in);
 		displayAdminMenu();
@@ -105,12 +130,12 @@ public class Admin {
 			case 1: adminEmployeeView();
 			case 2: adminClaimTypeView();
 			case 3: adminClaimView();
-			case 4: ;
+			case 4: mainMenuView();
 		}
 		input.close();
 	}
 	
-	public void adminEmployeeView()
+	public static void adminEmployeeView()
 	{
 		Scanner input = new Scanner(System.in);
 		displayEmployeeMenu();
@@ -129,7 +154,7 @@ public class Admin {
 		input.close();
 	}
 	
-	public void adminClaimTypeView()
+	public static void adminClaimTypeView()
 	{
 		Scanner input = new Scanner(System.in);
 		displayClaimTypeMenu();
@@ -148,7 +173,7 @@ public class Admin {
 		input.close();
 	}
 	
-	public void userClaimView()
+	public static void userClaimView()
 	{
 		Scanner input = new Scanner(System.in);
 		displayUserMenu();
@@ -161,12 +186,12 @@ public class Admin {
 			case 2: editUserClaim();
 			case 3: cancelUserClaim();
 			case 4: approveUserClaim();
-			case 5: ;
+			case 5: mainMenuView();
 		}
 		input.close();
 	}
 	
-	public void adminClaimView()
+	public static void adminClaimView()
 	{
 		Scanner input = new Scanner(System.in);
 		displayClaimMenu();
@@ -187,7 +212,7 @@ public class Admin {
 	
 	// Employee (Admin)
 	
-	public void addEmployee()
+	public static void addEmployee()
 	{
 		Scanner input = new Scanner(System.in);
 		
@@ -195,99 +220,104 @@ public class Admin {
 		String empID = input.nextLine();
 	}
 	
-	public void editEmployee()
+	public static void editEmployee()
 	{
 		
 	}
 	
-	public void deleteEmployee()
+	public static void deleteEmployee()
 	{
 		
 	}
 	
-	public void viewEmployee()
+	public static void viewEmployee()
 	{
 		
 	}
 	
-	public void searchEmployee()
+	public static void searchEmployee()
 	{
 		
 	}
 
 	// Claim Type (Admin)
 	
-	public void addClaimType()
+	public static void addClaimType()
 	{
 		
 	}
 	
-	public void editClaimType()
+	public static void editClaimType()
 	{
 		
 	}
 	
-	public void deleteClaimType()
+	public static void deleteClaimType()
 	{
 		
 	}
 	
-	public void viewClaimType()
+	public static void viewClaimType()
 	{
 		
 	}
 	
-	public void searchClaimType()
+	public static void searchClaimType()
 	{
 		
 	}
 	
 	// Claim (Admin)
 	
-	public void addClaim()
+	public static void addClaim()
 	{
 		
 	}
 	
-	public void editClaim()
+	public static void editClaim()
 	{
 		
 	}
 	
-	public void deleteClaim()
+	public static void deleteClaim()
 	{
 		
 	}
 	
-	public void viewClaim()
+	public static void viewClaim()
 	{
 		
 	}
 	
-	public void searchClaim()
+	public static void searchClaim()
 	{
 		
 	}
 
 	// Claim (User)
 	
-	public void applyUserClaim()
+	public static void applyUserClaim()
 	{
 		
 	}
 	
-	public void editUserClaim()
+	public static void editUserClaim()
 	{
 		
 	}
 	
-	public void cancelUserClaim()
+	public static void cancelUserClaim()
 	{
 		
 	}
 	
-	public void approveUserClaim()
+	public static void approveUserClaim()
 	{
 		
+	}
+
+	public static void main(String[] args) 
+	{
+		 mainMenuView();
 	}
 }
