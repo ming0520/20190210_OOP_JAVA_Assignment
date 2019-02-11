@@ -22,7 +22,6 @@ public class Employee
 		INACTIVE;
 	}
 	
-	
 	public Employee()
 	{
 		

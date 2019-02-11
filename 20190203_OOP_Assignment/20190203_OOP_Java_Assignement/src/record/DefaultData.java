@@ -12,16 +12,30 @@ public class DefaultData {
 	private Employee empInfo;
 	
 	public DefaultData() {
+//		Construct Employee Record
 		empInfo = new Employee();
+		
+		empInfo.SetDepartment("Director");
+		empInfo.SetEmpID("IMS-D");
+		empInfo.SetName("Terence");
+		empInfo.SetPassword("123");
+		empInfo.SetPosition("Chief of Director");
+		empInfo.SetStatus(Status.ACTIVE);
+		empInfo.SetSuperiorID("B");
+		empInfo.SetUserRole(UserRole.ADMIN);
+		empList[0] = empInfo;
+		
+		empInfo = null;
+		
 		empInfo.SetDepartment("Human Resource");
 		empInfo.SetEmpID("IMS-H-001");
 		empInfo.SetName("Alexandar");
 		empInfo.SetPassword("123");
 		empInfo.SetPosition("Manager");
 		empInfo.SetStatus(Status.ACTIVE);
-		empInfo.SetSuperiorID("IMS-D");
+		empInfo.SetSuperiorID("C");
 		empInfo.SetUserRole(UserRole.ADMIN);
-		empList[0] = empInfo;
+		empList[1] = empInfo;
 		
 		empInfo = null;
 		
@@ -31,9 +45,75 @@ public class DefaultData {
 		empInfo.SetPassword("123");
 		empInfo.SetPosition("Manager");
 		empInfo.SetStatus(Status.INACTIVE);
-		empInfo.SetSuperiorID("IMS-D");
+		empInfo.SetSuperiorID("C");
 		empInfo.SetUserRole(UserRole.ADMIN);
-		empList[1] = empInfo;
+		empList[2] = empInfo;
+		
+		empInfo = null;
+		
+		empInfo.SetDepartment("Marketing");
+		empInfo.SetEmpID("IMS-S-001");
+		empInfo.SetName("Mami");
+		empInfo.SetPassword("123");
+		empInfo.SetPosition("Sales");
+		empInfo.SetStatus(Status.ACTIVE);
+		empInfo.SetSuperiorID("D");
+		empInfo.SetUserRole(UserRole.USER);
+		empList[3] = empInfo;
+		
+		empInfo = null;
+		
+		empInfo.SetDepartment("Marketing");
+		empInfo.SetEmpID("IMS-S-002");
+		empInfo.SetName("Bryan");
+		empInfo.SetPassword("123");
+		empInfo.SetPosition("Sales");
+		empInfo.SetStatus(Status.ACTIVE);
+		empInfo.SetSuperiorID("D");
+		empInfo.SetUserRole(UserRole.USER);
+		empList[3] = empInfo;
+		
+		empInfo = null;
+		
+		empInfo.SetDepartment("Executive Officer");
+		empInfo.SetEmpID("CEO-001");
+		empInfo.SetName("Sam");
+		empInfo.SetPassword("123");
+		empInfo.SetPosition("CEO");
+		empInfo.SetStatus(Status.ACTIVE);
+		empInfo.SetSuperiorID("A");
+		empInfo.SetUserRole(UserRole.ADMIN);
+		empList[4] = empInfo;
+		
+//		Construct Claim Type Record
+		
+		ClaimType claimInfo = new ClaimType();
+		
+		claimInfo.SetApplicableToPosition("CEO");
+		claimInfo.SetClaimTypeID("001");
+		claimInfo.SetClaimTypeName("ACCIDENTAL DEATH");
+		claimInfo.SetLimit(1000000);
+		
+		claimInfo = null;
+		
+		claimInfo.SetApplicableToPosition("Manager");
+		claimInfo.SetClaimTypeID("002");
+		claimInfo.SetClaimTypeName("Vision loss");
+		claimInfo.SetLimit(50000);
+		
+		claimInfo = null;
+		
+		claimInfo.SetApplicableToPosition("Manager");
+		claimInfo.SetClaimTypeID("001");
+		claimInfo.SetClaimTypeName("");
+		claimInfo.SetLimit(50000);
+		
+		claimInfo = null;
+		
+		claimInfo.SetApplicableToPosition("Manager");
+		claimInfo.SetClaimTypeID("001");
+		claimInfo.SetClaimTypeName("Vision loss");
+		claimInfo.SetLimit(50000);
 	}
 
 }
