@@ -11,6 +11,7 @@ public class DefaultData {
 	public static ClaimRecord[] claimRecord = new ClaimRecord[10000];
 	private Employee empInfo;
 	private ClaimType claimInfo;
+	private ClaimRecord recordInfo;
 	
 	public DefaultData() {
 //		Construct Employee Record
@@ -94,27 +95,76 @@ public class DefaultData {
 		claimInfo.SetClaimTypeID("001");
 		claimInfo.SetClaimTypeName("ACCIDENTAL DEATH");
 		claimInfo.SetLimit(1000000);
-		
+		claimTypeList[1] = claimInfo;
+				
 		claimInfo = null;
 		
-		claimInfo.SetApplicableToPosition("CEO");
+		claimInfo.SetApplicableToPosition("Manager");
 		claimInfo.SetClaimTypeID("002");
 		claimInfo.SetClaimTypeName("DEATH OR TPD BENEFIT");
 		claimInfo.SetLimit(50000);
+		claimTypeList[2] = claimInfo;
 		
 		claimInfo = null;
 		
-		claimInfo.SetApplicableToPosition("Manager");
+		claimInfo.SetApplicableToPosition("Sales");
 		claimInfo.SetClaimTypeID("003");
-		claimInfo.SetClaimTypeName("");
-		claimInfo.SetLimit(50000);
+		claimInfo.SetClaimTypeName("Psychological conditions");
+		claimInfo.SetLimit(40000);
+		claimTypeList[3] = claimInfo;
 		
 		claimInfo = null;
 		
-		claimInfo.SetApplicableToPosition("Manager");
+		claimInfo.SetApplicableToPosition("Chief of Director");
 		claimInfo.SetClaimTypeID("004");
 		claimInfo.SetClaimTypeName("Vision loss");
 		claimInfo.SetLimit(50000);
-	}
+		claimTypeList[4] = claimInfo;
+		
+		claimInfo = null;
+		
+		claimInfo.SetApplicableToPosition("Sales");
+		claimInfo.SetClaimTypeID("005");
+		claimInfo.SetClaimTypeName("Hearing loss");
+		claimInfo.SetLimit(50000);
+		claimTypeList[5] = claimInfo;
 
+//		Construct Claim Record
+		
+		recordInfo = new ClaimRecord();
+		
+		recordInfo.SetEmpID("201804-002000");
+		recordInfo.SetClaimTypeID("001");
+		recordInfo.SetClaimID("12345");
+		recordInfo.SetAmount(60000);
+		recordInfo.SetRemark("Testing 123");
+		recordInfo.SetApproverID("12345");
+		recordInfo.SetStatus(ClaimStatus.PENDING);
+		recordInfo.SetDecisionRemark("No job");
+		claimRecord[0] = recordInfo;
+		
+		recordInfo = null;
+		
+		recordInfo.SetEmpID("201804-002001");
+		recordInfo.SetClaimTypeID("002");
+		recordInfo.SetClaimID("67890");
+		recordInfo.SetAmount(70000);
+		recordInfo.SetRemark("Testing 456");
+		recordInfo.SetApproverID("67890");
+		recordInfo.SetStatus(ClaimStatus.PENDING);
+		recordInfo.SetDecisionRemark("Injury");
+		claimRecord[1] = recordInfo;
+		
+		recordInfo = null;
+		
+		recordInfo.SetEmpID("201804-002002");
+		recordInfo.SetClaimTypeID("003");
+		recordInfo.SetClaimID("54321");
+		recordInfo.SetAmount(50000);
+		recordInfo.SetRemark("Testing 789");
+		recordInfo.SetApproverID("54321");
+		recordInfo.SetStatus(ClaimStatus.PENDING);
+		recordInfo.SetDecisionRemark("Lack of vitamin");
+		claimRecord[2] = recordInfo;
+	}
 }

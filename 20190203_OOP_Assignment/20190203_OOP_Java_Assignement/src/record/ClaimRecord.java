@@ -40,8 +40,8 @@ public class ClaimRecord
 	
 	public boolean ApplyClaim()
 	{
-		if(claimID == null || empID == null || claimTypeID == null || date == null ||
-				approverID == null) {
+		if(claimID == null || empID == null || claimTypeID == null || date == null || approverID == null) 
+		{
 			return false;
 		}
 		return true;
