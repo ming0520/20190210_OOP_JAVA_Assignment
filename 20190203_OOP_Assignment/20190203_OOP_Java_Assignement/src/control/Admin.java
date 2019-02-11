@@ -102,7 +102,7 @@ public class Admin
 			case 1: adminEmployeeView();
 			case 2: adminClaimTypeView();
 			case 3: adminClaimView();
-			case 4: User.userClaimView();
+			//case 4: User.userClaimView();
 		}
 		input.close();
 	}
@@ -164,7 +164,7 @@ public class Admin
 		input.close();
 	}
 	
-	// Employee (Admin)
+	// Employee
 	
 	public static void addEmployee()
 	{
@@ -172,10 +172,10 @@ public class Admin
 		
 		System.out.println("Employee's ID£º");
 		String empID = input.nextLine();
-		System.out.println("Employee's Password£º");
-		String password = input.nextLine();
 		System.out.println("Employee's Name£º");
 		String name = input.nextLine();
+		System.out.println("Employee's Password£º");
+		String password = input.nextLine();
 		System.out.println("Employee's Department£º");
 		String department = input.nextLine();
 		System.out.println("Employee's Position£º");
@@ -204,7 +204,7 @@ public class Admin
 		
 	}
 
-	// Claim Type (Admin)
+	// Claim Type
 	
 	public static void addClaimType()
 	{
@@ -231,7 +231,7 @@ public class Admin
 		
 	}
 	
-	// Claim (Admin)
+	// Claim
 	
 	public static void addClaim()
 	{
@@ -262,6 +262,6 @@ public class Admin
 	
 	public static void main(String[] args) 
 	{
-		
+		adminMenuView();
 	}
 }
