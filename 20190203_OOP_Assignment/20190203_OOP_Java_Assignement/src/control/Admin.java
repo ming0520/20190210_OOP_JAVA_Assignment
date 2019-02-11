@@ -81,7 +81,7 @@ public class Admin {
 		Scanner input = new Scanner(System.in);
 		
 		System.out.println("Enter employee id :");
-		
+		String empID = input.nextLine();
 	}
 	
 }

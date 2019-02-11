@@ -13,7 +13,8 @@ public class DefaultData {
 	private ClaimType claimInfo;
 	private ClaimRecord recordInfo;
 	
-	public DefaultData() {
+	public DefaultData()
+	{
 //		Construct Employee Record
 		empInfo = new Employee();
 		
@@ -133,9 +134,10 @@ public class DefaultData {
 		
 		recordInfo = new ClaimRecord();
 		
-		recordInfo.SetEmpID("201804-002000");
+		recordInfo.SetEmpID("IMS-S-001");
 		recordInfo.SetClaimTypeID("001");
 		recordInfo.SetClaimID("12345");
+		recordInfo.SetDate("2018-02-29");
 		recordInfo.SetAmount(60000);
 		recordInfo.SetRemark("Testing 123");
 		recordInfo.SetApproverID("12345");
@@ -145,9 +147,10 @@ public class DefaultData {
 		
 		recordInfo = null;
 		
-		recordInfo.SetEmpID("201804-002001");
+		recordInfo.SetEmpID("IMS-S-002");
 		recordInfo.SetClaimTypeID("002");
 		recordInfo.SetClaimID("67890");
+		recordInfo.SetDate("2018-03-20");
 		recordInfo.SetAmount(70000);
 		recordInfo.SetRemark("Testing 456");
 		recordInfo.SetApproverID("67890");
@@ -157,9 +160,10 @@ public class DefaultData {
 		
 		recordInfo = null;
 		
-		recordInfo.SetEmpID("201804-002002");
+		recordInfo.SetEmpID("IMS-T-001");
 		recordInfo.SetClaimTypeID("003");
 		recordInfo.SetClaimID("54321");
+		recordInfo.SetDate("2018-06-19");
 		recordInfo.SetAmount(50000);
 		recordInfo.SetRemark("Testing 789");
 		recordInfo.SetApproverID("54321");
