@@ -1,5 +1,8 @@
 package record;
 
+import database.Dbh;
+import java.sql.*;
+
 public class ClaimRecord
 {
 	private String claimID;
@@ -11,6 +14,7 @@ public class ClaimRecord
 	private String approverID;
 	private ClaimStatus status = ClaimStatus.PENDING;
 	private String decisionRemark;
+	private int rowCount;
 	
 	public enum ClaimStatus
 	{
@@ -22,7 +26,14 @@ public class ClaimRecord
 	
 	public ClaimRecord()
 	{
-		
+		this.claimID  = null;
+		this.empID = null;
+		this.claimTypeID = null;
+		this.date = null;
+		this.remark = null;
+		this.approverID = null;
+		this.status = ClaimStatus.PENDING;
+		this.decisionRemark = null;
 	}
 	
 	public ClaimRecord(String claimID, String empID, String claimTypeID, String date, float amount, String remark, String approverID, ClaimStatus status, String decisionRemark)
@@ -36,15 +47,6 @@ public class ClaimRecord
 		this.approverID = approverID;
 		this.status = status;
 		this.decisionRemark = decisionRemark;
-	}
-	
-	public boolean ApplyClaim()
-	{
-		if(claimID == null || empID == null || claimTypeID == null || date == null || approverID == null) 
-		{
-			return false;
-		}
-		return true;
 	}
 	
 	public void SetClaimID(String claimID) 
@@ -135,5 +137,91 @@ public class ClaimRecord
 	public String GetDecisionRemark() 
 	{
 		return decisionRemark;
-	}	
+	}
+	
+	public void DisplayClaim() {
+		Dbh db = new Dbh();
+		String sql = "SELECT * FROM claimrecord";
+		
+		try {
+//			int counter = 0;
+			db.connect();
+//			ResultSet rsRowCount = db.getStatement().executeQuery(""
+//					+ "SELECT COUNT(*) FROM claimrecord");
+//			
+//			int rowCount = rsRowCount.getInt(1);
+//			
+//			ClaimRecord[] claimRecord = new ClaimRecord[rowCount];
+//			this.rowCount = rowCount;
+//			
+//			rsRowCount.close();
+			
+			ResultSet rs = db.getStatement().executeQuery(sql);
+			
+			System.out.println("=============================================== Claim Record ==========================================================================");
+			System.out.println("Claim ID \t\t Employee ID \t\t Claim Type ID \t\t Date \t\t Amount \t\t Remark \t\t Approver ID \t\t Claim Status \t\t Decision Remark");
+			
+			while(rs.next()) {
+				String claimId = rs.getString("claimID");
+				String empId = rs.getString("empID");
+				String claimTypeId = rs.getString("claimTypeID");
+				String date = rs.getString("date");
+				float amount = rs.getFloat("amount");
+				String remark = rs.getString("remark");
+				String approverId = rs.getString("approverID");
+				String claimStatus = rs.getString("claimStatus");
+				String decisionRemark = rs.getString("decisionRemark");
+				String tab = " \t\t ";
+				
+				System.out.print(claimId + tab);
+				System.out.print(empId + tab);
+				System.out.print(claimTypeId + tab);
+				System.out.print(date + tab);
+				System.out.print(amount + tab);
+				System.out.print(remark + tab);
+				System.out.print(approverId + tab);
+				System.out.print(claimStatus + tab);
+				System.out.print(decisionRemark);
+				System.out.println("");
+			}
+
+			rs.close();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public boolean ApplyClaim (ClaimRecord newClaim) {
+		
+		if(newClaim.claimID == null || newClaim.empID == null || newClaim.date == null || newClaim.approverID == null) {
+			return false;
+		}
+		
+		Dbh db = new Dbh();
+		String insertCRSql = "INSERT INTO claimrecord (claimID,empID,claimTypeID,date,amount,remark,approverID,claimStatus,decisionRemark)"
+									+" VALUES (?,		?,		?,			?,	?,		?,		?,			?,			?)";
+		try {
+			db.connect();
+			PreparedStatement addRecord = db.getConnection().prepareStatement(insertCRSql);
+			
+			addRecord.setString(1, newClaim.claimID);
+			addRecord.setString(2, newClaim.empID);
+			addRecord.setString(3, newClaim.claimTypeID);
+			addRecord.setString(4, newClaim.date);
+			addRecord.setFloat(5, newClaim.amount);
+			addRecord.setString(6, newClaim.remark);
+			addRecord.setString(7, newClaim.approverID);
+			addRecord.setString(8, newClaim.status.toString());
+			addRecord.setString(10, newClaim.decisionRemark);
+			
+			addRecord.executeQuery();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
 }
