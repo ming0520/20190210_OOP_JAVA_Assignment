@@ -155,7 +155,7 @@ public class Main{
 				Admin.adminMenuView();
 				break;
 			case USER:
-				User.displayUserMenu();
+				User.userClaimView();
 				break;				
 		default:
 			Main main = new Main();
