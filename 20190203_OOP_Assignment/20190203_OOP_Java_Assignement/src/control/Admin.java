@@ -171,13 +171,13 @@ public class Admin
 		Scanner input = new Scanner(System.in);
 		
 		
-		System.out.println("Employee's Name£º");
+		System.out.println("Employee's Name: ");
 		String name = input.nextLine();
-		System.out.println("Employee's Password£º");
+		System.out.println("Employee's Password: ");
 		String password = input.nextLine();
-		System.out.println("Employee's Department£º");
+		System.out.println("Employee's Department: ");
 		String department = input.nextLine();
-		System.out.println("Employee's Position£º");
+		System.out.println("Employee's Position: ");
 		String position = input.nextLine();
 		
 		
@@ -190,14 +190,14 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Employee's ID£º");
+		System.out.println("Employee's ID: ");
 		String empID = input.nextLine();
-		System.out.println("Employee's Password£º");
+		System.out.println("Employee's Password: ");
 		String password = input.nextLine();
 		
-		System.out.println("New Employee's Department£º");
+		System.out.println("New Employee's Department: ");
 		String department = input.nextLine();
-		System.out.println("New Employee's Position£º");
+		System.out.println("New Employee's Position: ");
 		String position = input.nextLine();
 		
 		
@@ -210,7 +210,7 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Employee's ID£º");
+		System.out.println("Employee's ID: ");
 		String empID = input.nextLine();
 		
 		
@@ -231,7 +231,7 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Employee's ID£º");
+		System.out.println("Employee's ID: ");
 		String empID = input.nextLine();
 		
 		
@@ -246,13 +246,13 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Claim Type ID£º");
+		System.out.println("Claim Type ID: ");
 		String claimTypeID = input.nextLine();
-		System.out.println("Claim Type Name£º");
+		System.out.println("Claim Type Name: ");
 		String claimTypeName = input.nextLine();
-		System.out.println("Position£º");
+		System.out.println("Position: ");
 		String applicableToPosition = input.nextLine();
-		System.out.println("Limit£º");
+		System.out.println("Limit: ");
 		float limit = input.nextFloat();
 		
 		
@@ -264,12 +264,12 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Claim Type ID£º");
+		System.out.println("Claim Type ID: ");
 		String claimTypeID = input.nextLine();
 		
-		System.out.println("New Position£º");
+		System.out.println("New Position: ");
 		String applicableToPosition = input.nextLine();
-		System.out.println("New Limit£º");
+		System.out.println("New Limit: ");
 		float limit = input.nextFloat();
 		
 		
@@ -282,7 +282,7 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Claim Type ID£º");
+		System.out.println("Claim Type ID: ");
 		String claimTypeID = input.nextLine();
 		
 		
@@ -303,7 +303,7 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Claim Type ID£º");
+		System.out.println("Claim Type ID: ");
 		String claimTypeID = input.nextLine();
 		
 		
@@ -318,23 +318,23 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Employee's ID£º");
+		System.out.println("Employee's ID: ");
 		String empID = input.nextLine();
-		System.out.println("Claim ID£º");
+		System.out.println("Claim ID: ");
 		String claimID = input.nextLine();
-		System.out.println("Claim Type ID£º");
+		System.out.println("Claim Type ID: ");
 		String claimTypeID = input.nextLine();
-		System.out.println("Date£º");
+		System.out.println("Date: ");
 		String date = input.nextLine();
-		System.out.println("Amount£º");
+		System.out.println("Amount: ");
 		float amount = input.nextFloat();
-		System.out.println("Remark£º");
+		System.out.println("Remark: ");
 		String remark = input.nextLine();
-		System.out.println("Approver ID£º");
+		System.out.println("Approver ID: ");
 		String approverID = input.nextLine();
-		System.out.println("Status£º");
+		System.out.println("Status:");
 		String status = input.nextLine();
-		System.out.println("Remark£º");
+		System.out.println("Remark: ");
 		String decisionRemark = input.nextLine();
 		
 
@@ -347,14 +347,14 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Employee's ID£º");
+		System.out.println("Employee's ID: ");
 		String empID = input.nextLine();
-		System.out.println("Claim ID£º");
+		System.out.println("Claim ID: ");
 		String claimID = input.nextLine();
 		
-		System.out.println("New Amount£º");
+		System.out.println("New Amount: ");
 		float amount = input.nextFloat();
-		System.out.println("New Remark£º");
+		System.out.println("New Remark: ");
 		String remark = input.nextLine();
 		
 		
@@ -367,12 +367,12 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Claim ID£º");
+		System.out.println("Claim ID: ");
 		String claimID = input.nextLine();
 		
-		System.out.println("New Status£º");
+		System.out.println("New Status: ");
 		String status = input.nextLine();
-		System.out.println("New Remark£º");
+		System.out.println("New Remark: ");
 		String decisionRemark = input.nextLine();
 		
 		
@@ -385,9 +385,9 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Employee's ID£º");
+		System.out.println("Employee's ID: ");
 		String empID = input.nextLine();
-		System.out.println("Claim ID£º");
+		System.out.println("Claim ID: ");
 		String claimID = input.nextLine();
 		
 		
@@ -403,12 +403,5 @@ public class Admin
 		
 		
 		adminClaimView();
-	}
-
-	// Program start
-	
-	public static void main(String[] args) 
-	{
-		adminMenuView();
 	}
 }

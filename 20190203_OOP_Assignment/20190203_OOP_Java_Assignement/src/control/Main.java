@@ -150,10 +150,10 @@ public class Main{
 	public void determineMenu() {
 		switch(Main.empInfo.GetUserRole()) {
 			case ADMIN:
-				Admin.displayAdminMenu();
+				Admin.adminMenuView();
 				break;
 			case USER:
-				User.displayUserMenu();
+				User.userClaimView();
 				break;				
 		default:
 			Main main = new Main();
