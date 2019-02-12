@@ -35,16 +35,56 @@ public class User
 	
 	public static void applyUserClaim()
 	{
-			
+		Scanner input = new Scanner(System.in);
+		
+		System.out.println("Employee's ID£º");
+		String empID = input.nextLine();
+		System.out.println("Claim Type ID£º");
+		String claimTypeID = input.nextLine();
+		System.out.println("Amount: ");
+		float amount = input.nextFloat();
+		System.out.println("Remark: ");
+		String remark = input.nextLine();
+		
+		
+		
+		userClaimView();
+		input.close();
 	}
 		
 	public static void editUserClaim()
 	{
+		Scanner input = new Scanner(System.in);
 		
+		System.out.println("Employee's ID£º");
+		String empID = input.nextLine();
+		System.out.println("Claim Type ID£º");
+		String claimTypeID = input.nextLine();
+		
+		
+		System.out.println("New Amount: ");
+		float amount = input.nextFloat();
+		System.out.println("New Remark: ");
+		String remark = input.nextLine();
+		
+		
+		
+		userClaimView();
+		input.close();
 	}
 		
 	public static void cancelUserClaim()
 	{
-			
+		Scanner input = new Scanner(System.in);
+		
+		System.out.println("Employee's ID£º");
+		String empID = input.nextLine();
+		System.out.println("Claim ID£º");
+		String claimID = input.nextLine();
+		
+		
+		
+		userClaimView();
+		input.close();
 	}
 }

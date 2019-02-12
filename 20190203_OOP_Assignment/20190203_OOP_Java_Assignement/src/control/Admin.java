@@ -181,6 +181,7 @@ public class Admin
 		String position = input.nextLine();
 		
 		
+		
 		adminEmployeeView();
 		input.close();
 	}
@@ -234,6 +235,7 @@ public class Admin
 		String empID = input.nextLine();
 		
 		
+		
 		adminEmployeeView();
 		input.close();
 	}
@@ -271,6 +273,7 @@ public class Admin
 		float limit = input.nextFloat();
 		
 		
+		
 		adminClaimTypeView();
 		input.close();
 	}
@@ -281,6 +284,7 @@ public class Admin
 		
 		System.out.println("Claim Type ID£º");
 		String claimTypeID = input.nextLine();
+		
 		
 		
 		adminClaimTypeView();
@@ -301,6 +305,7 @@ public class Admin
 		
 		System.out.println("Claim Type ID£º");
 		String claimTypeID = input.nextLine();
+		
 		
 		
 		adminClaimTypeView();
