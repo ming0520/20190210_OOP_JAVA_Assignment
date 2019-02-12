@@ -2,9 +2,16 @@ package control;
 
 import java.util.*;
 import java.sql.*;
+
 import database.Dbh;
 
+import record.Employee.Status;
+import record.Employee.UserRole;
 import record.Employee;
+
+import control.Admin;
+import control.User;
+
 
 public class Main{
 	private static Employee empInfo;
@@ -56,8 +63,9 @@ public class Main{
 
 								System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 										+ "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-								empInfo.SetPassword(pw);
+								Main.empInfo.SetPassword(pw);
 								System.out.println("Password correct.");
+								this.setEmployee();
 								pflag = 0;	
 								break;
 							}
@@ -66,6 +74,7 @@ public class Main{
 								pflag = 1;
 							}
 						}
+						rs.close();
 					}while(pflag == 1);
 				}
 			}while(eflag == 0);
@@ -78,8 +87,78 @@ public class Main{
 
 		}
 	
-	public void setEmployee() {
-		
+	public void setEmployee (){
+		Dbh db = new Dbh();
+		String selectSql = "SELECT * FROM empdetails WHERE empID = ?";
+		try {
+			db.connect();
+			PreparedStatement stmt = db.getConnection().prepareStatement(selectSql);
+			stmt.setString(1, Main.empInfo.GetEmpID());
+			
+			ResultSet rs;
+			rs = stmt.executeQuery();
+			
+			
+			while(rs.next()) {
+				Main.empInfo.SetEmpID(rs.getString("empID"));
+				Main.empInfo.SetPassword(rs.getString("pass"));
+				Main.empInfo.SetName(rs.getString("name"));
+				Main.empInfo.SetDepartment(rs.getString("department"));
+				Main.empInfo.SetPosition(rs.getString("position"));
+				
+				UserRole userRole;
+				switch(rs.getString("userRole")) {
+					case "ADMIN" :
+						userRole = UserRole.ADMIN;
+						break;
+					case "USER" :
+						userRole = UserRole.USER;
+						break;
+					default:
+						userRole = UserRole.USER;
+				}
+				
+				Main.empInfo.SetUserRole(userRole);
+				
+				Status status;
+				
+				switch (rs.getString("stat")) {
+					case "ACTIVE":
+						status = Status.ACTIVE;
+						break;
+					case "INACTIVE" :
+						status = Status.INACTIVE;
+						break;
+					default:
+						status = Status.INACTIVE;
+				}
+				
+				Main.empInfo.SetStatus(status);
+				Main.empInfo.SetSuperiorID(rs.getString("superiorID"));
+				System.out.println("Setting profile...");
+				Main.empInfo.displayEmployee();
+				System.out.println("Done!");
+				this.determineMenu();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void determineMenu() {
+		switch(Main.empInfo.GetUserRole()) {
+			case ADMIN:
+				Admin.displayAdminMenu();
+				break;
+			case USER:
+				User.displayUserMenu();
+				break;				
+		default:
+			Main main = new Main();
+			break; 
+		}
 	}
 	public static void main (String[] args) {
 		Main main = new Main();
