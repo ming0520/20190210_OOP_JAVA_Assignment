@@ -25,16 +25,6 @@ public class Admin
 	    }
 	}
 	
-	public static void displayMainMenu()
-	{
-		clearConsole();
-		System.out.println("*********************** Main Menu ***********************");
-		System.out.println("* 1. Admin Menu						*");
-		System.out.println("* 2. User Menu						*");
-		System.out.println("* Enter the number and press <enter> to continue	*");
-		System.out.println("*********************************************************");	
-	}
-	
 	public static void displayAdminMenu() 
 	{
 		clearConsole();
@@ -65,11 +55,11 @@ public class Admin
 	{
 		clearConsole();
 		System.out.println("********************* Claim Menu ************************");
-		System.out.println("* 1. Add Claim						*");
+		System.out.println("* 1. Apply Claim					*");
 		System.out.println("* 2. Edit Claim						*");
-		System.out.println("* 3. Delete Claim					*");
-		System.out.println("* 4. View Claim						*");
-		System.out.println("* 5. Search Claim					*");
+		System.out.println("* 3. Cancel Claim					*");
+		System.out.println("* 4. Approve Claim					*");
+		System.out.println("* 5. Display Claim					*");
 		System.out.println("* 6. Back to Admin Menu					*");
 		System.out.println("* Enter the number and press <enter> to continue	*");
 		System.out.println("*********************************************************");
@@ -102,7 +92,7 @@ public class Admin
 			case 1: adminEmployeeView();
 			case 2: adminClaimTypeView();
 			case 3: adminClaimView();
-			//case 4: User.userClaimView();
+			//case 4: Main.main();
 		}
 		input.close();
 	}
