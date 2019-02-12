@@ -154,11 +154,11 @@ public class Admin
 		
 		switch(choice)
 		{
-			case 1: addClaim();
+			case 1: applyClaim();
 			case 2: editClaim();
-			case 3: deleteClaim();
-			case 4: viewClaim();
-			case 5: searchClaim();
+			case 3: cancelClaim();
+			case 4: approveClaim();
+			case 5: displayClaim();
 			case 6: adminMenuView();
 		}
 		input.close();
@@ -181,6 +181,8 @@ public class Admin
 		String position = input.nextLine();
 		
 		
+		adminEmployeeView();
+		input.close();
 	}
 	
 	public static void editEmployee()
@@ -196,6 +198,11 @@ public class Admin
 		String department = input.nextLine();
 		System.out.println("New Employee's Position£º");
 		String position = input.nextLine();
+		
+		
+		
+		adminEmployeeView();
+		input.close();
 	}
 	
 	public static void deleteEmployee()
@@ -204,11 +211,19 @@ public class Admin
 		
 		System.out.println("Employee's ID£º");
 		String empID = input.nextLine();
+		
+		
+		
+		adminEmployeeView();
+		input.close();
 	}
 	
 	public static void viewEmployee()
 	{
 		
+		
+		
+		adminEmployeeView();
 	}
 	
 	public static void searchEmployee()
@@ -218,60 +233,171 @@ public class Admin
 		System.out.println("Employee's ID£º");
 		String empID = input.nextLine();
 		
+		
+		adminEmployeeView();
+		input.close();
 	}
 
 	// Claim Type
 	
 	public static void addClaimType()
 	{
+		Scanner input = new Scanner(System.in);
 		
+		System.out.println("Claim Type ID£º");
+		String claimTypeID = input.nextLine();
+		System.out.println("Claim Type Name£º");
+		String claimTypeName = input.nextLine();
+		System.out.println("Position£º");
+		String applicableToPosition = input.nextLine();
+		System.out.println("Limit£º");
+		float limit = input.nextFloat();
+		
+		
+		adminClaimTypeView();
+		input.close();
 	}
 	
 	public static void editClaimType()
 	{
+		Scanner input = new Scanner(System.in);
 		
+		System.out.println("Claim Type ID£º");
+		String claimTypeID = input.nextLine();
+		
+		System.out.println("New Position£º");
+		String applicableToPosition = input.nextLine();
+		System.out.println("New Limit£º");
+		float limit = input.nextFloat();
+		
+		
+		adminClaimTypeView();
+		input.close();
 	}
 	
 	public static void deleteClaimType()
 	{
+		Scanner input = new Scanner(System.in);
 		
+		System.out.println("Claim Type ID£º");
+		String claimTypeID = input.nextLine();
+		
+		
+		adminClaimTypeView();
+		input.close();
 	}
 	
 	public static void viewClaimType()
 	{
 		
+		
+		
+		adminClaimTypeView();
 	}
 	
 	public static void searchClaimType()
 	{
+		Scanner input = new Scanner(System.in);
 		
+		System.out.println("Claim Type ID£º");
+		String claimTypeID = input.nextLine();
+		
+		
+		adminClaimTypeView();
+		input.close();
 	}
 	
 	// Claim
 	
-	public static void addClaim()
+	public static void applyClaim()
 	{
+		Scanner input = new Scanner(System.in);
 		
+		System.out.println("Employee's ID£º");
+		String empID = input.nextLine();
+		System.out.println("Claim ID£º");
+		String claimID = input.nextLine();
+		System.out.println("Claim Type ID£º");
+		String claimTypeID = input.nextLine();
+		System.out.println("Date£º");
+		String date = input.nextLine();
+		System.out.println("Amount£º");
+		float amount = input.nextFloat();
+		System.out.println("Remark£º");
+		String remark = input.nextLine();
+		System.out.println("Approver ID£º");
+		String approverID = input.nextLine();
+		System.out.println("Status£º");
+		String status = input.nextLine();
+		System.out.println("Remark£º");
+		String decisionRemark = input.nextLine();
+		
+
+		
+		adminClaimView();
+		input.close();
 	}
 	
 	public static void editClaim()
 	{
+		Scanner input = new Scanner(System.in);
 		
+		System.out.println("Employee's ID£º");
+		String empID = input.nextLine();
+		System.out.println("Claim ID£º");
+		String claimID = input.nextLine();
+		
+		System.out.println("New Amount£º");
+		float amount = input.nextFloat();
+		System.out.println("New Remark£º");
+		String remark = input.nextLine();
+		
+		
+		
+		adminClaimView();
+		input.close();
 	}
 	
-	public static void deleteClaim()
+	public static void approveClaim()
 	{
+		Scanner input = new Scanner(System.in);
 		
+		System.out.println("Claim ID£º");
+		String claimID = input.nextLine();
+		
+		System.out.println("New Status£º");
+		String status = input.nextLine();
+		System.out.println("New Remark£º");
+		String decisionRemark = input.nextLine();
+		
+		
+		
+		adminClaimView();
+		input.close();
 	}
 	
-	public static void viewClaim()
+	public static void cancelClaim()
 	{
+		Scanner input = new Scanner(System.in);
 		
+		System.out.println("Employee's ID£º");
+		String empID = input.nextLine();
+		System.out.println("Claim ID£º");
+		String claimID = input.nextLine();
+		
+		
+		
+		adminClaimView();
+		input.close();
 	}
 	
-	public static void searchClaim()
+	public static void displayClaim()
 	{
 		
+		
+		
+		
+		adminClaimView();
 	}
 
 	// Program start
