@@ -129,4 +129,18 @@ public class Employee
 	{
 		return superiorID;
 	}
+	
+	public void displayEmployee() {
+		System.out.println("=================================================================");
+		System.out.println("                       User Profile");
+		System.out.println("-----------------------------------------------------------------");
+		System.out.println("ID		:\t" + this.GetEmpID());
+		System.out.println("Name		:\t" + this.GetName());
+		System.out.println("Department	:\t" + this.GetDepatment());
+		System.out.println("Position	:\t" + this.GetPosition());
+		System.out.println("Status		:\t" + this.GetStatus().toString());
+		System.out.println("Role		:\t"+this.GetUserRole().toString());
+		System.out.println("Superior ID 	:\t"+ this.GetSuperiorID());
+		System.out.println("=================================================================");
+	}
 }
