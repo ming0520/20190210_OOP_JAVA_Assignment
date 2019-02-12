@@ -26,7 +26,9 @@ public class Main{
 			db.connect();
 			Scanner input = new Scanner(System.in);
 			
-			System.out.println("*********************** Login ***********************");
+			System.out.println("=================================================================");
+			System.out.println("                              Login");
+			System.out.println("-----------------------------------------------------------------");
 			
 			do {
 				System.out.print("Enter your employee ID: ");
@@ -150,7 +152,7 @@ public class Main{
 	public void determineMenu() {
 		switch(Main.empInfo.GetUserRole()) {
 			case ADMIN:
-				Admin.displayAdminMenu();
+				Admin.adminMenuView();
 				break;
 			case USER:
 				User.displayUserMenu();
