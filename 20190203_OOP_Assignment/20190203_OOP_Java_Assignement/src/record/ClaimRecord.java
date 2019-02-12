@@ -186,6 +186,7 @@ public class ClaimRecord
 			}
 
 			rs.close();
+			db.closeConnection();
 			
 		}catch(Exception e) {
 			e.printStackTrace();
