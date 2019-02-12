@@ -170,8 +170,7 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Employee's ID£º");
-		String empID = input.nextLine();
+		
 		System.out.println("Employee's Name£º");
 		String name = input.nextLine();
 		System.out.println("Employee's Password£º");
@@ -186,12 +185,25 @@ public class Admin
 	
 	public static void editEmployee()
 	{
+		Scanner input = new Scanner(System.in);
 		
+		System.out.println("Employee's ID£º");
+		String empID = input.nextLine();
+		System.out.println("Employee's Password£º");
+		String password = input.nextLine();
+		
+		System.out.println("New Employee's Department£º");
+		String department = input.nextLine();
+		System.out.println("New Employee's Position£º");
+		String position = input.nextLine();
 	}
 	
 	public static void deleteEmployee()
 	{
+		Scanner input = new Scanner(System.in);
 		
+		System.out.println("Employee's ID£º");
+		String empID = input.nextLine();
 	}
 	
 	public static void viewEmployee()
@@ -201,6 +213,10 @@ public class Admin
 	
 	public static void searchEmployee()
 	{
+		Scanner input = new Scanner(System.in);
+		
+		System.out.println("Employee's ID£º");
+		String empID = input.nextLine();
 		
 	}
 
