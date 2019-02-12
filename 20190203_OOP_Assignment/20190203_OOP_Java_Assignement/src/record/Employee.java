@@ -132,7 +132,7 @@ public class Employee
 	
 	public void displayEmployee() {
 		System.out.println("=================================================================");
-		System.out.println("                       User Profile");
+		System.out.println("                       Employee Profile");
 		System.out.println("-----------------------------------------------------------------");
 		System.out.println("ID		:\t" + this.GetEmpID());
 		System.out.println("Name		:\t" + this.GetName());
