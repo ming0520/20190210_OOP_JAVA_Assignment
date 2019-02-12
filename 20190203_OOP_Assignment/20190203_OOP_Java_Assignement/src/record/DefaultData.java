@@ -153,7 +153,7 @@ public class DefaultData {
 		recordInfo.SetDate("2018-03-20");
 		recordInfo.SetAmount(70000);
 		recordInfo.SetRemark("Testing 456");
-		recordInfo.SetApproverID("67890");
+		recordInfo.SetApproverID("12345");
 		recordInfo.SetStatus(ClaimStatus.PENDING);
 		recordInfo.SetDecisionRemark("Injury");
 		claimRecord[1] = recordInfo;
@@ -166,7 +166,7 @@ public class DefaultData {
 		recordInfo.SetDate("2018-06-19");
 		recordInfo.SetAmount(50000);
 		recordInfo.SetRemark("Testing 789");
-		recordInfo.SetApproverID("54321");
+		recordInfo.SetApproverID("12345");
 		recordInfo.SetStatus(ClaimStatus.PENDING);
 		recordInfo.SetDecisionRemark("Lack of vitamin");
 		claimRecord[2] = recordInfo;
