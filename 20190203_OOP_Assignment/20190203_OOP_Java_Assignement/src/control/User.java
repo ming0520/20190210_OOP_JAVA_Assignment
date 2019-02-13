@@ -14,6 +14,9 @@ public class User
 
 {
 	
+	private static Main main = new Main();
+	private static Employee empInfo = main.getEmployee();
+
 	public static void main(String[] args) {
 		User.userClaimView();
 	}
@@ -26,9 +29,16 @@ public class User
 		System.out.println(" 1. Apply Claim					");
 		System.out.println(" 2. Edit Claim     					");
 		System.out.println(" 3. Cancel Claim					");
+		System.out.println(" 4. View Claim					");
 //		System.out.println("* 4. Back To Main Menu                            	");
 		System.out.println(" Enter the number and press <enter> to continue	");
 		System.out.println("=================================================================");	
+	}
+	
+	public static void viewClaim() {
+		ClaimRecord claimRecord = new ClaimRecord();
+		
+		claimRecord.DisplayClaim("SELECT * FROM claimrecord WHERE empID = '" + User.empInfo.GetEmpID() + "'");
 	}
 	
 	
@@ -47,7 +57,7 @@ public class User
 		    {
 		         choice = Integer.parseInt(input.nextLine());
 		         // The range for the choice
-		         if (choice > 0 && choice <= 3)
+		         if (choice > 0 && choice <= 4)
 		         {
 		              break;
 		         }
@@ -69,6 +79,7 @@ public class User
 			case 1: applyUserClaim();break;
 			case 2: editUserClaim();break;
 			case 3: cancelUserClaim();break;
+			case 4: viewClaim();break;
 		}
 		input.close();
 	}
