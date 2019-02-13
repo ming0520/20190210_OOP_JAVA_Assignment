@@ -28,56 +28,64 @@ public class Admin
 	public static void displayAdminMenu() 
 	{
 		clearConsole();
-		System.out.println("********************** Admin Menu ***********************");
-		System.out.println("* 1. Employee Record					*");
-		System.out.println("* 2. Claim Type Record					*");
-		System.out.println("* 3. Claim Record					*");
-		System.out.println("* 4. Back To Main Menu              			*");
-		System.out.println("* Enter the number and press <enter> to continue	*");
-		System.out.println("*********************************************************");	
+		System.out.println("=================================================================");
+		System.out.println("*                      Admin Menu                               *");
+		System.out.println("-----------------------------------------------------------------");
+		System.out.println("* 1. Employee Record                                            *");
+		System.out.println("* 2. Claim Type Record                                          *");
+		System.out.println("* 3. Claim Record                                               *");
+		System.out.println("* 4. Back To Main Menu                                          *");
+		System.out.println("* Enter the number and press <enter> to continue                *");
+		System.out.println("=================================================================");	
 	}
 	
 	public static void displayEmployeeMenu()
 	{	
 		clearConsole();
-		System.out.println("********************* Employee Menu *********************");
-		System.out.println("* 1. Add Employee					*");
-		System.out.println("* 2. Edit Employee					*");
-		System.out.println("* 3. Delete Employee					*");
-		System.out.println("* 4. View Employee					*");
-		System.out.println("* 5. Search Employee					*");
-		System.out.println("* 6. Back to Admin Menu					*");
-		System.out.println("* Enter the number and press <enter> to continue	*");
-		System.out.println("*********************************************************");		
+		System.out.println("=================================================================");
+		System.out.println("*                      Employee Record                          *");
+		System.out.println("-----------------------------------------------------------------");
+		System.out.println("* 1. Add Employee                                               *");
+		System.out.println("* 2. Edit Employee                                              *");
+		System.out.println("* 3. Delete Employee                                            *");
+		System.out.println("* 4. View Employee                                              *");
+		System.out.println("* 5. Search Employee                                            *");
+		System.out.println("* 6. Back to Admin Menu                                         *");
+		System.out.println("* Enter the number and press <enter> to continue                *");
+		System.out.println("=================================================================");			
 	}
 	
 	public static void displayClaimMenu()
 	{
 		clearConsole();
-		System.out.println("********************* Claim Menu ************************");
-		System.out.println("* 1. Apply Claim					*");
-		System.out.println("* 2. Edit Claim						*");
-		System.out.println("* 3. Cancel Claim					*");
-		System.out.println("* 4. Approve Claim					*");
-		System.out.println("* 5. Display Claim					*");
-		System.out.println("* 6. Back to Admin Menu					*");
-		System.out.println("* Enter the number and press <enter> to continue	*");
-		System.out.println("*********************************************************");
+		System.out.println("=================================================================");
+		System.out.println("*                      Claim Menu                               *");
+		System.out.println("-----------------------------------------------------------------");
+		System.out.println("* 1. Apply Claim                                                *");
+		System.out.println("* 2. Edit Claim                                                 *");
+		System.out.println("* 3. Cancel Claim                                               *");
+		System.out.println("* 4. Approve Claim                                              *");
+		System.out.println("* 5. Display Claim                                              *");
+		System.out.println("* 6. Back to Admin Menu                                         *");
+		System.out.println("* Enter the number and press <enter> to continue	            *");
+		System.out.println("=================================================================");	
 		
 	}
 	
 	public static void displayClaimTypeMenu()
 	{
 		clearConsole();
-		System.out.println("******************** Claim Type Menu ********************");
-		System.out.println("* 1. Add Claim Type					*");
-		System.out.println("* 2. Edit Claim Type					*");
-		System.out.println("* 3. Delete Claim Type					*");
-		System.out.println("* 4. View Claim Type					*");
-		System.out.println("* 5. Search Claim Type					*");
-		System.out.println("* 6. Back to Admin Menu					*");
-		System.out.println("* Enter the number and press <enter> to continue	*");
-		System.out.println("*********************************************************");
+		System.out.println("=================================================================");
+		System.out.println("*                      Claim Type Menu                          *");
+		System.out.println("-----------------------------------------------------------------");
+		System.out.println("* 1. Add Claim Type                                             *");
+		System.out.println("* 2. Edit Claim Type                                            *");
+		System.out.println("* 3. Delete Claim Type                                          *");
+		System.out.println("* 4. View Claim Type                                            *");
+		System.out.println("* 5. Search Claim Type                                          *");
+		System.out.println("* 6. Back to Admin Menu                                         *");
+		System.out.println("* Enter the number and press <enter> to continue                *");
+		System.out.println("=================================================================");	
 	}
 	
 	public static void adminMenuView()
@@ -111,9 +119,9 @@ public class Admin
 		
 		switch(choice)
 		{
-			case 1: adminEmployeeView();
-			case 2: adminClaimTypeView();
-			case 3: adminClaimView();
+			case 1: adminEmployeeView();break;
+			case 2: adminClaimTypeView();break;
+			case 3: adminClaimView();break;
 			//case 4: Main.main();
 		}
 		input.close();
