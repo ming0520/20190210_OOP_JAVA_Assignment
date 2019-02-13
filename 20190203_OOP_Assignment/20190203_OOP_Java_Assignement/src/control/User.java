@@ -23,11 +23,11 @@ public class User
 		System.out.println("=================================================================");
 		System.out.println("                       User Menu ");
 		System.out.println("-----------------------------------------------------------------");
-		System.out.println("* 1. Apply Claim					*");
-		System.out.println("* 2. Edit Claim     					*");
-		System.out.println("* 3. Cancel Claim					*");
-//		System.out.println("* 4. Back To Main Menu                            	*");
-		System.out.println("* Enter the number and press <enter> to continue	*");
+		System.out.println(" 1. Apply Claim					");
+		System.out.println(" 2. Edit Claim     					");
+		System.out.println(" 3. Cancel Claim					");
+//		System.out.println("* 4. Back To Main Menu                            	");
+		System.out.println(" Enter the number and press <enter> to continue	");
 		System.out.println("=================================================================");	
 	}
 	
