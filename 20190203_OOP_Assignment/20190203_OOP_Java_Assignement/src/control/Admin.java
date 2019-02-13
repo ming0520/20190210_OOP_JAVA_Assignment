@@ -85,7 +85,29 @@ public class Admin
 		Scanner input = new Scanner(System.in);
 		displayAdminMenu();
 		
-		int choice = input.nextInt(); 
+		int choice = 0;
+		System.out.print("Enter Choice: ");
+		
+		while(true) 
+		{
+		    try 
+		    {
+		         choice = Integer.parseInt(input.nextLine());
+		         
+		         if (choice > 0 && choice <= 4)
+		         {
+		              break;
+		         }
+		         else
+		         {
+		        	 System.out.print("Invalid choice! Please try again:");
+		         }
+		    } 
+		    catch (NumberFormatException e) 
+		    {
+		    	System.out.print("Invalid choice! Please try again:");
+		    }
+		}
 		
 		switch(choice)
 		{
@@ -102,7 +124,29 @@ public class Admin
 		Scanner input = new Scanner(System.in);
 		displayEmployeeMenu();
 		
-		int choice = input.nextInt(); 
+		int choice = 0;
+		System.out.print("Enter Choice: ");
+		
+		while(true) 
+		{
+		    try 
+		    {
+		         choice = Integer.parseInt(input.nextLine());
+		         
+		         if (choice > 0 && choice <= 6)
+		         {
+		              break;
+		         }
+		         else
+		         {
+		        	 System.out.print("Invalid choice! Please try again:");
+		         }
+		    } 
+		    catch (NumberFormatException e) 
+		    {
+		    	System.out.print("Invalid choice! Please try again:");
+		    }
+		} 
 		
 		switch(choice)
 		{
@@ -121,7 +165,29 @@ public class Admin
 		Scanner input = new Scanner(System.in);
 		displayClaimTypeMenu();
 		
-		int choice = input.nextInt(); 
+		int choice = 0;
+		System.out.print("Enter Choice: ");
+		
+		while(true) 
+		{
+		    try 
+		    {
+		         choice = Integer.parseInt(input.nextLine());
+		         
+		         if (choice > 0 && choice <= 6)
+		         {
+		              break;
+		         }
+		         else
+		         {
+		        	 System.out.print("Invalid choice! Please try again:");
+		         }
+		    } 
+		    catch (NumberFormatException e) 
+		    {
+		    	System.out.print("Invalid choice! Please try again:");
+		    }
+		}  
 		
 		switch(choice)
 		{
@@ -140,7 +206,29 @@ public class Admin
 		Scanner input = new Scanner(System.in);
 		displayClaimMenu();
 		
-		int choice = input.nextInt(); 
+		int choice = 0;
+		System.out.print("Enter Choice: ");
+		
+		while(true) 
+		{
+		    try 
+		    {
+		         choice = Integer.parseInt(input.nextLine());
+		         
+		         if (choice > 0 && choice <= 6)
+		         {
+		              break;
+		         }
+		         else
+		         {
+		        	 System.out.print("Invalid choice! Please try again:");
+		         }
+		    } 
+		    catch (NumberFormatException e) 
+		    {
+		    	System.out.print("Invalid choice! Please try again:");
+		    }
+		}  
 		
 		switch(choice)
 		{

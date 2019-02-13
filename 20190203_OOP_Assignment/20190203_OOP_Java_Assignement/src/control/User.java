@@ -30,19 +30,27 @@ public class User
 		displayUserMenu();
 		
 		int choice = 0;
-		System.out.println("Enter Choice: ");
+		System.out.print("Enter Choice: ");
 		//Check to choice
-		while(true) {
+		while(true) 
+		{
 		    //Try to get an integer
-		    try {
+		    try 
+		    {
 		         choice = Integer.parseInt(input.nextLine());
 		         // The range for the choice
 		         if (choice > 0 && choice <= 3)
+		         {
 		              break;
+		         }
 		         else
+		         {
 		        	 System.out.print("Invalid choice! Please try again:");
 		         // not positive. 
-		    } catch (NumberFormatException e) {
+		         }
+		    } 
+		    catch (NumberFormatException e) 
+		    {
 		         // not an integer
 		    	System.out.print("Invalid choice! Please try again:");
 		    }
