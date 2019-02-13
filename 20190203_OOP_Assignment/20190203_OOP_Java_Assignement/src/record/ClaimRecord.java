@@ -1,7 +1,11 @@
 package record;
 
 import database.Dbh;
-import java.sql.*;
+
+import java.text.SimpleDateFormat;
+
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 
 public class ClaimRecord
 {
@@ -194,9 +198,9 @@ public class ClaimRecord
 		
 	}
 	
-	public boolean ApplyClaim (ClaimRecord newClaim) {
+	public boolean ApplyClaim () {
 		
-		if(newClaim.claimID == null || newClaim.empID == null || newClaim.date == null || newClaim.approverID == null) {
+		if(this.claimID == null || this.empID == null || this.date == null || this.approverID == null) {
 			return false;
 		}
 		
@@ -207,15 +211,46 @@ public class ClaimRecord
 			db.connect();
 			PreparedStatement addRecord = db.getConnection().prepareStatement(insertCRSql);
 			
+			addRecord.setString(1, this.claimID);
+			addRecord.setString(2, this.empID);
+			addRecord.setString(3, this.claimTypeID);
+			addRecord.setString(4, this.date);
+			addRecord.setFloat(5, this.amount);
+			addRecord.setString(6, this.remark);
+			addRecord.setString(7, this.approverID);
+			addRecord.setString(8, this.status.toString());
+			addRecord.setString(10, this.decisionRemark);
+			
+			addRecord.executeQuery();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	public boolean ApplyClaim (ClaimRecord newClaim) {
+		String pattern = "yyyy-MM-dd";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		
+		if(newClaim.claimID == null || newClaim.empID == null || newClaim.date == null) {
+			return false;
+		}
+		
+		Dbh db = new Dbh();
+		String insertCRSql = "INSERT INTO claimrecord (claimID,empID,claimTypeID,date,amount,remark,claimStatus)"
+											+" VALUES (?		,?	,	?		, ?	 ,	?	,	?	,	?)";
+		try {
+			db.connect();
+			PreparedStatement addRecord = db.getConnection().prepareStatement(insertCRSql);
+			
 			addRecord.setString(1, newClaim.claimID);
 			addRecord.setString(2, newClaim.empID);
 			addRecord.setString(3, newClaim.claimTypeID);
 			addRecord.setString(4, newClaim.date);
 			addRecord.setFloat(5, newClaim.amount);
 			addRecord.setString(6, newClaim.remark);
-			addRecord.setString(7, newClaim.approverID);
-			addRecord.setString(8, newClaim.status.toString());
-			addRecord.setString(10, newClaim.decisionRemark);
+			addRecord.setString(7, newClaim.status.toString());
 			
 			addRecord.executeQuery();
 			
