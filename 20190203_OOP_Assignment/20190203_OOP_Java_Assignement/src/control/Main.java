@@ -17,8 +17,17 @@ public class Main
 {
 	private static Employee empInfo;
 	
+	public Employee getEmployee() {
+		return Main.empInfo;
+		
+	}
+	
 	public Main() 
 	{
+
+	}
+	
+	public void entryPoint() {
 		empInfo = new Employee();
 		Dbh db = new Dbh();
 		// TODO Auto-generated method stub
@@ -157,7 +166,7 @@ public class Main
 				Main.empInfo.SetSuperiorID(rs.getString("superiorID"));
 				System.out.println("Setting profile...");
 				Main.empInfo.displayEmployee();
-				System.out.println("Done!");
+				System.out.println("Done set the profile!");
 				this.determineMenu();
 			}
 			
@@ -179,12 +188,13 @@ public class Main
 				User.userClaimView();
 				break;				
 			default:
-				Main main = new Main();
+				this.entryPoint();
 			break; 
 		}
 	}
 	public static void main (String[] args) {
 		Main main = new Main();
+		main.entryPoint();
 	}
 
 }
