@@ -3,6 +3,7 @@ package record;
 import database.Dbh;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
@@ -198,15 +199,65 @@ public class ClaimRecord
 		
 	}
 	
-	public boolean ApplyClaim () {
+	public boolean generateClaimID() {
 		
-		if(this.claimID == null || this.empID == null || this.date == null || this.approverID == null) {
-			return false;
-		}
+		int cid = (int)(Math.random() * 10000 + 1);
+		this.claimID = Integer.toString(cid);
 		
 		Dbh db = new Dbh();
-		String insertCRSql = "INSERT INTO claimrecord (claimID,empID,claimTypeID,date,amount,remark,approverID,claimStatus,decisionRemark)"
-									+" VALUES (?,		?,		?,			?,	?,		?,		?,			?,			?)";
+		
+		try {
+			
+			db.connect();
+			String sql = "SELECT claimID FROM claimrecord WHERE claimID = ?";
+			PreparedStatement stmt = db.getConnection().prepareStatement(sql);
+			stmt.setString(1, this.claimID);
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				String claimID = rs.getString("claimID");
+				
+				if(claimID.equals(this.claimID)) {
+					rs.close();
+					db.closeConnection();
+					stmt.close();
+					generateClaimID();
+				}
+				else {
+					rs.close();
+					db.closeConnection();
+					stmt.close();
+					return true;
+				}
+				
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
+	
+	public boolean ApplyClaim () {
+		
+		if(this.empID == null)
+			return false;
+		
+		Dbh db = new Dbh();
+		Date claimDate = new Date();
+		
+		SimpleDateFormat simpleDF = new SimpleDateFormat("EEE MMM dd, yyyy");
+		System.out.println("Generating ClaimID....");
+		if(this.generateClaimID()) {
+			System.out.println("ClaimID generated!");
+		}
+		
+		this.date = simpleDF.format(claimDate);
+		
+		String insertCRSql = "INSERT INTO claimrecord (claimID,empID,claimTypeID,date,amount,remark,claimStatus,approverID,decisionRemark)"
+									+" VALUES (?,?,?,?,?,?,?,?,?)";
 		try {
 			db.connect();
 			PreparedStatement addRecord = db.getConnection().prepareStatement(insertCRSql);
@@ -217,47 +268,53 @@ public class ClaimRecord
 			addRecord.setString(4, this.date);
 			addRecord.setFloat(5, this.amount);
 			addRecord.setString(6, this.remark);
-			addRecord.setString(7, this.approverID);
-			addRecord.setString(8, this.status.toString());
-			addRecord.setString(10, this.decisionRemark);
+			addRecord.setString(7, this.status.toString());
+			addRecord.setString(8, "ADMIN");
+			addRecord.setString(9, "Submited");
+			System.out.println(addRecord.toString());
+			addRecord.executeUpdate();
 			
-			addRecord.executeQuery();
 			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return true;
-	}
-	
-	public boolean ApplyClaim (ClaimRecord newClaim) {
-		String pattern = "yyyy-MM-dd";
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		
-		if(newClaim.claimID == null || newClaim.empID == null || newClaim.date == null) {
-			return false;
-		}
-		
-		Dbh db = new Dbh();
-		String insertCRSql = "INSERT INTO claimrecord (claimID,empID,claimTypeID,date,amount,remark,claimStatus)"
-											+" VALUES (?		,?	,	?		, ?	 ,	?	,	?	,	?)";
-		try {
-			db.connect();
-			PreparedStatement addRecord = db.getConnection().prepareStatement(insertCRSql);
-			
-			addRecord.setString(1, newClaim.claimID);
-			addRecord.setString(2, newClaim.empID);
-			addRecord.setString(3, newClaim.claimTypeID);
-			addRecord.setString(4, newClaim.date);
-			addRecord.setFloat(5, newClaim.amount);
-			addRecord.setString(6, newClaim.remark);
-			addRecord.setString(7, newClaim.status.toString());
-			
-			addRecord.executeQuery();
+			addRecord.close();
+			db.closeConnection();
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 		return true;
+		
 	}
 	
+//	public boolean ApplyClaim (ClaimRecord newClaim) {
+//		String pattern = "yyyy-MM-dd";
+//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+//		
+//		if(newClaim.claimID == null || newClaim.empID == null || newClaim.date == null) {
+//			return false;
+//		}
+//		
+//		Dbh db = new Dbh();
+//		String insertCRSql = "INSERT INTO claimrecord (claimID,empID,claimTypeID,date,amount,remark,claimStatus)"
+//											+" VALUES (?		,?	,	?		, ?	 ,	?	,	?	,	?)";
+//		try {
+//			db.connect();
+//			PreparedStatement addRecord = db.getConnection().prepareStatement(insertCRSql);
+//			
+//			addRecord.setString(1, newClaim.claimID);
+//			addRecord.setString(2, newClaim.empID);
+//			addRecord.setString(3, newClaim.claimTypeID);
+//			addRecord.setString(4, newClaim.date);
+//			addRecord.setFloat(5, newClaim.amount);
+//			addRecord.setString(6, newClaim.remark);
+//			addRecord.setString(7, newClaim.status.toString());
+//			
+//			addRecord.executeQuery();
+//			
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		return true;
+//	}
+//	
 }
