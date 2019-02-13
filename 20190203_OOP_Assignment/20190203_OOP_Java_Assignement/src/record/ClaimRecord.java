@@ -144,9 +144,9 @@ public class ClaimRecord
 		return decisionRemark;
 	}
 	
-	public void DisplayClaim() {
+	public void DisplayClaim(String sql) {
 		Dbh db = new Dbh();
-		String sql = "SELECT * FROM claimrecord";
+//		sql = "SELECT * FROM claimrecord WHERE 1";
 		
 		try {
 //			int counter = 0;
@@ -163,8 +163,9 @@ public class ClaimRecord
 			
 			ResultSet rs = db.getStatement().executeQuery(sql);
 			
-			System.out.println("=============================================== Claim Record ==========================================================================");
-			System.out.println("Claim ID \t\t Employee ID \t\t Claim Type ID \t\t Date \t\t Amount \t\t Remark \t\t Approver ID \t\t Claim Status \t\t Decision Remark");
+			System.out.println("=====================================================================================================================================================================================================================================================");
+			System.out.println("Claim ID \t\t Employee ID \t\t Claim Type ID \t\t Date \t\t\t\t\t Amount \t\t\t Remark \t\t Approver ID \t\t Claim Status \t\t Decision Remark");
+			System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			
 			while(rs.next()) {
 				String claimId = rs.getString("claimID");
@@ -176,19 +177,20 @@ public class ClaimRecord
 				String approverId = rs.getString("approverID");
 				String claimStatus = rs.getString("claimStatus");
 				String decisionRemark = rs.getString("decisionRemark");
-				String tab = " \t\t ";
 				
-				System.out.print(claimId + tab);
-				System.out.print(empId + tab);
-				System.out.print(claimTypeId + tab);
-				System.out.print(date + tab);
-				System.out.print(amount + tab);
-				System.out.print(remark + tab);
-				System.out.print(approverId + tab);
-				System.out.print(claimStatus + tab);
+				System.out.print(claimId.trim() 		+ " \t\t\t ");
+				System.out.print(empId.trim() 			+ " \t\t ");
+				System.out.print(claimTypeId.trim()  	+ " \t\t\t ");
+				System.out.print(date.trim()			+ " \t\t\t ");
+				System.out.print(amount  		+ " \t\t\t ");
+				System.out.print(remark.trim()  		+ " \t\t\t ");
+				System.out.print(approverId.trim()  	+ " \t\t\t ");
+				System.out.print(claimStatus 	+ " \t\t ");
 				System.out.print(decisionRemark);
 				System.out.println("");
+			System.out.println("......................................................................................................................................................................................................................................................");				
 			}
+			System.out.println("======================================================================================================================================================================================================================================================");
 
 			rs.close();
 			db.closeConnection();
@@ -284,6 +286,11 @@ public class ClaimRecord
 		
 		return true;
 		
+	}
+	
+	public static void main(String[] args) {
+		ClaimRecord cr = new ClaimRecord();
+		cr.DisplayClaim("SELECT * FROM claimrecord WHERE empID = 'IMS-S-001' ");
 	}
 	
 //	public boolean ApplyClaim (ClaimRecord newClaim) {
