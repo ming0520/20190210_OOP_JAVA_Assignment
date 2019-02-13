@@ -1,8 +1,14 @@
 package control;
 
 import java.util.Scanner;
+
 import record.ClaimRecord;
 import record.ClaimRecord.ClaimStatus;
+
+import record.Employee;
+
+import database.Dbh;
+import control.Main;
 
 public class User 
 
@@ -14,13 +20,15 @@ public class User
 	
 	public static void displayUserMenu() 
 	{
-		System.out.println("*********************** User Menu ***********************");
+		System.out.println("=================================================================");
+		System.out.println("                       User Menu ");
+		System.out.println("-----------------------------------------------------------------");
 		System.out.println("* 1. Apply Claim					*");
 		System.out.println("* 2. Edit Claim     					*");
 		System.out.println("* 3. Cancel Claim					*");
 //		System.out.println("* 4. Back To Main Menu                            	*");
 		System.out.println("* Enter the number and press <enter> to continue	*");
-		System.out.println("*********************************************************");	
+		System.out.println("=================================================================");	
 	}
 	
 	
@@ -71,31 +79,38 @@ public class User
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.print("Employee's ID: ");
-		String empID = input.nextLine();
-		System.out.print("Claim Type ID: ");
-		String claimTypeID = input.nextLine();
-		System.out.print("Amount: ");
-		float amount = input.nextFloat();
-		System.out.print("Remark: ");
-		String remark = input.nextLine();
-		
-		ClaimRecord newClaim = new ClaimRecord();
-		
-		newClaim.SetEmpID(empID);
-		newClaim.SetClaimTypeID(claimTypeID);
-		newClaim.SetAmount(amount);
-		newClaim.SetRemark(remark);
-		newClaim.SetStatus(ClaimStatus.PENDING);
-		
-		if(newClaim.ApplyClaim() == true) {
-			System.out.println("Applied for claim!");
-		}else {
-			System.out.println("Cannot apply for the claim. Please try again!");
-		}
-		
-		userClaimView();
-		input.close();
+		Main main = new Main();
+		Employee empInfo = main.getEmployee();
+			System.out.println("=================================================================");	
+			System.out.println("                    Application for Claim");
+			System.out.println("-----------------------------------------------------------------");
+			String empID = empInfo.GetEmpID();
+			System.out.println("Employe ID: " + empID);
+			System.out.print("Claim Type ID: ");
+			String claimTypeID = input.nextLine();
+			
+			System.out.print("Amount: ");
+			float amount = input.nextFloat();
+			
+			System.out.print("Remark: ");
+			input.nextLine();
+			String remark = input.nextLine();
+			
+			ClaimRecord newClaim = new ClaimRecord();
+			
+			newClaim.SetEmpID(empID);
+			newClaim.SetClaimTypeID(claimTypeID);
+			newClaim.SetAmount(amount);
+			newClaim.SetRemark(remark);
+			newClaim.SetStatus(ClaimStatus.PENDING);
+			if(newClaim.ApplyClaim() == true) {
+				System.out.println("Successful apply for the claim!");
+			}else
+				System.out.println("Unsuccessful apply for the claim!\nPlease try again");
+			
+			System.out.println("=================================================================");
+			input.close();
+
 	}
 		
 	public static void editUserClaim()
