@@ -33,6 +33,9 @@ public class Admin
  * Return : void
  *  
  */
+	public static void main(String[] args) {
+		adminMenuView();
+	}
 	
 	public static void displayAdminMenu() 
 	{
@@ -276,17 +279,67 @@ public class Admin
 	{
 		Scanner input = new Scanner(System.in);
 		
+		Employee newEmp = new Employee();
 		
+		System.out.print("Employee's ID: ");
+		newEmp.SetEmpID(input.nextLine());
 		System.out.print("Employee's Name: ");
-		String name = input.nextLine();
+		newEmp.SetName(input.nextLine());
 		System.out.print("Employee's Password: ");
-		String password = input.nextLine();
+		newEmp.SetPassword(input.nextLine());
 		System.out.print("Employee's Department: ");
-		String department = input.nextLine();
+		newEmp.SetDepartment(input.nextLine());
 		System.out.print("Employee's Position: ");
-		String position = input.nextLine();
+		newEmp.SetPosition(input.nextLine());
+		
+		System.out.println("1 - ACTIVE\t2 - INACTIVE :");
+		System.out.print("Employee's status");
+		
+		int statusCode = 0;
+		status:
+		do {
+			statusCode = input.nextInt();
+			switch(statusCode) {
+				case 1:
+					newEmp.SetStatus(Employee.Status.ACTIVE);
+					break;
+				case 2:
+					newEmp.SetStatus(Employee.Status.INACTIVE);
+					break;
+				default:
+					System.out.println("Invlid status! Please try again:");
+					continue status;
+			}
+			
+		}while(statusCode < 0);
 		
 		
+		
+		System.out.println("1 - ADMIN\t2 - USER");
+		System.out.println("Employee's role : ");
+		int userRoleCode = 0;
+		userRole:
+		do {
+			userRoleCode = input.nextInt();
+			switch(userRoleCode) {
+				case 1:
+					newEmp.SetUserRole(Employee.UserRole.ADMIN);
+					break;
+				case 2:
+					newEmp.SetUserRole(Employee.UserRole.USER);
+					break;
+				default:
+					System.out.println("Invlid role! Please try again:");
+					continue userRole;
+			}
+			
+		}while(userRoleCode < 0);
+		
+		System.out.print("Employee's superior ID: ");
+		input.nextLine();
+		newEmp.SetSuperiorID(input.nextLine());
+		
+		newEmp.addEmployee();
 		
 		adminEmployeeView();
 		input.close();
