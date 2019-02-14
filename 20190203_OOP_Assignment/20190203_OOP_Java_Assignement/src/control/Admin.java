@@ -2,6 +2,7 @@ package control;
 
 import java.util.Scanner;
 import record.Employee;
+import record.ClaimType;
 
 public class Admin
 {
@@ -460,8 +461,9 @@ public class Admin
 	
 	public static void viewClaimType()
 	{
+		ClaimType claimType = new ClaimType();
 		
-		
+		claimType.displayClaimType();
 		
 		adminClaimTypeView();
 	}
