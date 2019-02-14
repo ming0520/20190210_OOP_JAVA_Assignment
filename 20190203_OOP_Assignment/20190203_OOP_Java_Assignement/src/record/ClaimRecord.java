@@ -29,6 +29,11 @@ public class ClaimRecord
 		CANCELLED;
 	}
 	
+	public static void main(String[] args) {
+		ClaimRecord cr = new ClaimRecord();
+		cr.DisplayClaim("SELECT * FROM claimrecord WHERE empID = 'IMS-S-001' ");
+	}
+	
 	public ClaimRecord()
 	{
 		this.claimID  = null;
@@ -288,10 +293,7 @@ public class ClaimRecord
 		
 	}
 	
-	public static void main(String[] args) {
-		ClaimRecord cr = new ClaimRecord();
-		cr.DisplayClaim("SELECT * FROM claimrecord WHERE empID = 'IMS-S-001' ");
-	}
+
 	
 //	public boolean ApplyClaim (ClaimRecord newClaim) {
 //		String pattern = "yyyy-MM-dd";
