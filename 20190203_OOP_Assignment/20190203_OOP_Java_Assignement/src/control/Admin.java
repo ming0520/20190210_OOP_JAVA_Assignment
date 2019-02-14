@@ -1,6 +1,7 @@
 package control;
 
 import java.util.Scanner;
+import record.Employee;
 
 public class Admin
 {
@@ -25,6 +26,13 @@ public class Admin
 	    }
 	    
 	}
+/*
+ * 
+ * Title : All the menu layout for Admin Operation
+ * Function : Display the particular menu to the user
+ * Return : void
+ *  
+ */
 	
 	public static void displayAdminMenu() 
 	{
@@ -45,7 +53,7 @@ public class Admin
 		System.out.println("=================================================================");
 		System.out.println("                       Employee Record                          ");
 		System.out.println("-----------------------------------------------------------------");
-		System.out.println("  1. Add Employee                                               ");
+		System.out.println(" 1. Add Employee                                               ");
 		System.out.println(" 2. Edit Employee                                              ");
 		System.out.println(" 3. Delete Employee                                            ");
 		System.out.println(" 4. View Employee                                              ");
@@ -87,7 +95,14 @@ public class Admin
 		System.out.println(" Enter the number and press <enter> to continue                ");
 		System.out.println("=================================================================");	
 	}
-	
+
+
+//	/*
+//	 * Title : Call out the menu
+//	 * Function : Display the specify menu with specify operation
+//	 * Return : void
+//	 *  
+//	 */
 	public static void adminMenuView()
 	{
 		Scanner input = new Scanner(System.in);
@@ -122,7 +137,7 @@ public class Admin
 			case 1: adminEmployeeView();break;
 			case 2: adminClaimTypeView();break;
 			case 3: adminClaimView();break;
-			//case 4: Main.main();
+			
 		}
 		input.close();
 	}
@@ -167,6 +182,7 @@ public class Admin
 		}
 		input.close();
 	}
+
 	
 	public static void adminClaimTypeView()
 	{
@@ -250,7 +266,11 @@ public class Admin
 		input.close();
 	}
 	
-	// Employee
+//	/*
+//	 * Employee record operation
+//	 * Get the input from user and process it in database
+//	 * Function: Add, Edit, Delete, View, Search Employee and back to previous menu
+//	 */
 	
 	public static void addEmployee()
 	{
@@ -304,13 +324,17 @@ public class Admin
 		adminEmployeeView();
 		input.close();
 	}
-	
+
 	public static void viewEmployee()
 	{
 		
+		Scanner input = new Scanner(System.in);
+		Employee newEmp = new Employee(); 
+		newEmp.getEmployee("SELECT * FROM empdetails WHERE 1");
+		System.out.println("Press <enter> to continue...");
+		input.nextLine();
+		input.close();
 		
-		
-		adminEmployeeView();
 	}
 	
 	public static void searchEmployee()
@@ -326,7 +350,11 @@ public class Admin
 		input.close();
 	}
 
-	// Claim Type
+//	/*
+//	 *  Claim Type operation
+//	 *  Process the claimtype for database
+//	 *  Function : Add,Edit,Delete,View,Search Claim Type in database
+//	 */
 	
 	public static void addClaimType()
 	{
@@ -398,7 +426,11 @@ public class Admin
 		input.close();
 	}
 	
-	// Claim
+//	/*
+//	 *  Operation for Claim record
+//	 *  Process the claim record on the database
+//	 *  Function: apply,edit,approve,cancel,view for the claim record
+//	 */
 	
 	public static void applyClaim()
 	{
