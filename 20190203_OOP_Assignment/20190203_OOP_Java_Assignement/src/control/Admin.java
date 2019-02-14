@@ -293,7 +293,7 @@ public class Admin
 		newEmp.SetPosition(input.nextLine());
 		
 		System.out.println("1 - ACTIVE\t2 - INACTIVE :");
-		System.out.print("Employee's status");
+		System.out.print("Employee's status : ");
 		
 		int statusCode = 0;
 		status:
@@ -316,7 +316,7 @@ public class Admin
 		
 		
 		System.out.println("1 - ADMIN\t2 - USER");
-		System.out.println("Employee's role : ");
+		System.out.print("Employee's role : ");
 		int userRoleCode = 0;
 		userRole:
 		do {
@@ -386,8 +386,8 @@ public class Admin
 		newEmp.getEmployee("SELECT * FROM empdetails WHERE 1");
 		System.out.println("Press <enter> to continue...");
 		input.nextLine();
+		adminEmployeeView();
 		input.close();
-		
 	}
 	
 	public static void searchEmployee()
