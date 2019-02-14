@@ -1,6 +1,16 @@
 package record;
 
-public class Employee 
+import database.Dbh;
+import record.Employee.Status;
+import record.Employee.UserRole;
+
+import java.sql.ResultSet;
+
+import control.Main;
+
+import java.sql.PreparedStatement;
+
+public class Employee extends Dbh
 {
 	private String empID;
 	private String password;
@@ -142,5 +152,73 @@ public class Employee
 		System.out.println("Role		:\t"+this.GetUserRole().toString());
 		System.out.println("Superior ID 	:\t"+ this.GetSuperiorID());
 		System.out.println("=================================================================");
+	}
+	
+	public Employee getEmployeeObj() {
+		Employee newEmp = new Employee();
+		 newEmp.SetDepartment(this.department);
+		 newEmp.SetEmpID(this.empID);
+		 newEmp.SetName(this.name);
+		 newEmp.SetPassword(this.password);
+		 newEmp.SetPosition(this.position);
+		 newEmp.SetStatus(this.status);
+		 newEmp.SetSuperiorID(this.superiorID);
+		 newEmp.SetUserRole(this.userRole);
+		return newEmp;
+		 
+	}
+	
+	public void getEmployee(String sql) {
+		try {
+			this.connect();
+			PreparedStatement stmt = this.getConnection().prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Employee empInfo = new Employee();
+				this.SetEmpID(rs.getString("empID"));
+				this.SetPassword(rs.getString("pass"));
+				this.SetName(rs.getString("name"));
+				this.SetDepartment(rs.getString("department"));
+				this.SetPosition(rs.getString("position"));
+				
+				UserRole userRole;
+				switch(rs.getString("userRole")) 
+				{
+					case "ADMIN" :
+						userRole = UserRole.ADMIN;
+						break;
+					case "USER" :
+						userRole = UserRole.USER;
+						break;
+					default:
+						userRole = UserRole.USER;
+				}
+				
+				this.SetUserRole(userRole);
+				
+				Status status;
+				
+				switch (rs.getString("stat"))
+				{
+					case "ACTIVE":
+						status = Status.ACTIVE;
+						break;
+					case "INACTIVE" :
+						status = Status.INACTIVE;
+						break;
+					default:
+						status = Status.INACTIVE;
+				}
+				
+				this.SetStatus(status);
+				this.SetSuperiorID(rs.getString("superiorID"));
+				this.displayEmployee();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
