@@ -1,5 +1,8 @@
 package record;
 
+import database.Dbh;
+import java.sql.*;
+
 public class ClaimType
 {
 	private String claimTypeID;
@@ -71,5 +74,40 @@ public class ClaimType
 	public float GetLimit()
 	{
 		return limit;
+	}
+	
+	public void printClaimType() {
+		System.out.println("=================================================================");
+		System.out.println("                      Claim Type Record");
+		System.out.println("-----------------------------------------------------------------");
+		System.out.println("Claim Type ID          : " + this.claimTypeID);
+		System.out.println("Claim Name             : " + this.claimTypeName);
+		System.out.println("Applicable to Position : " + this.applicableToPosition);
+		System.out.println("Limit                  : " + this.limit);
+		System.out.println("=================================================================");
+	}
+	
+	public void displayClaimType() {
+		String sql = "SELECT * FROM claimtype WHERE ?";
+		Dbh db = new Dbh();
+		
+		try {
+			db.connect();
+			PreparedStatement stmt = db.getConnection().prepareStatement(sql);
+			stmt.setString(1, "1");
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				this.claimTypeID = rs.getString("claimTypeID");
+				this.claimTypeName = rs.getString("claimTypeName");
+				this.applicableToPosition = rs.getString("applicableToPosition");
+				this.limit = rs.getFloat("claimLimit");
+				this.printClaimType();
+			}
+			
+		}catch(Exception se) {
+			se.printStackTrace();
+		}
 	}
 }
