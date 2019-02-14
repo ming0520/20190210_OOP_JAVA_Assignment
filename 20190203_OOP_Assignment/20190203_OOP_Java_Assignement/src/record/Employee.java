@@ -175,7 +175,6 @@ public class Employee extends Dbh
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()) {
-				Employee empInfo = new Employee();
 				this.SetEmpID(rs.getString("empID"));
 				this.SetPassword(rs.getString("pass"));
 				this.SetName(rs.getString("name"));
@@ -214,11 +213,113 @@ public class Employee extends Dbh
 				this.SetStatus(status);
 				this.SetSuperiorID(rs.getString("superiorID"));
 				this.displayEmployee();
+				
 			}
+			
+			rs.close();
+			this.closeConnection();
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 	}
+	
+	public boolean addEmployee() {
+		String SelectSql = "SELECT empID FROM empdetails WHERE empID = ?";
+		String InsertSql = "INSERT INTO `empdetails` (`empID`, `pass`, `name`, `department`, `position`, `userRole`, `stat`, `superiorID`) "
+				+ "VALUES\n" + 
+				"(?, ?,?, ?, ?, ?, ?, ?)";
+		Dbh db = new Dbh();
+		
+		try {
+			db.connect();
+			
+			PreparedStatement selectEmp = db.getConnection().prepareStatement(SelectSql);
+			selectEmp.setString(1, this.GetEmpID());
+			ResultSet rs = selectEmp.executeQuery();
+			
+			int counter = 0;
+			while(rs.next()) {
+				counter++;
+			}
+			
+			if(counter > 0) {
+				System.out.println("The employee ID existed! Please try again!");
+				
+				selectEmp.close();
+				rs.close();
+				db.closeConnection();
+				
+				return false;
+			}else {
+				
+				PreparedStatement insertEmp = db.getConnection().prepareStatement(InsertSql);
+				insertEmp.setString(1, this.GetEmpID());
+				insertEmp.setString(2, this.GetPassword());
+				insertEmp.setString(3, this.GetName());
+				insertEmp.setString(4, this.GetDepatment());
+				insertEmp.setString(5, this.GetPosition());
+				insertEmp.setString(6, this.GetUserRole().toString());
+				insertEmp.setString(7, this.GetStatus().toString());
+				insertEmp.setString(8, this.GetSuperiorID());
+				insertEmp.executeUpdate();
+				System.out.println("Added successfully!");
+				
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+//	public boolean addEmployee(Employee newEmp) {
+//		String SelectSql = "SELECT empID FROM empdetails WHERE empID = ?";
+//		String InsertSql = "INSERT INTO `empdetails` (`empID`, `pass`, `name`, `department`, `position`, `userRole`, `stat`, `superiorID`) "
+//				+ "VALUES\n" + 
+//				"(?, ?,?, ?, ?, ?, ?, ?)";
+//		Dbh db = new Dbh();
+//		
+//		try {
+//			db.connect();
+//			
+//			PreparedStatement selectEmp = db.getConnection().prepareStatement(SelectSql);
+//			selectEmp.setString(1, newEmp.GetEmpID());
+//			ResultSet rs = selectEmp.executeQuery();
+//			
+//			if(rs.getRow() > 0) {
+//				System.out.println("The employee ID existed! Please try again!");
+//				
+//				selectEmp.close();
+//				rs.close();
+//				db.closeConnection();
+//				
+//				return false;
+//			}else {
+//				
+//				PreparedStatement insertEmp = db.getConnection().prepareStatement(InsertSql);
+//				insertEmp.setString(1, newEmp.GetEmpID());
+//				insertEmp.setString(2, newEmp.GetPassword());
+//				insertEmp.setString(3, newEmp.GetName());
+//				insertEmp.setString(4, newEmp.GetDepatment());
+//				insertEmp.setString(5, newEmp.GetPosition());
+//				insertEmp.setString(6, newEmp.GetUserRole().toString());
+//				insertEmp.setString(7, newEmp.GetStatus().toString());
+//				insertEmp.setString(8, newEmp.GetSuperiorID());
+//				
+//				try {
+//					insertEmp.executeUpdate();
+//				}catch(Exception e) {
+//					e.getMessage();
+//				}
+//				
+//			}
+//			
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		return false;
+//	}
+	
 }
