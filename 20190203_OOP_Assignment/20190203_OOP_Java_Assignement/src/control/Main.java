@@ -113,68 +113,11 @@ public class Main
 	
 	public void setEmployee ()
 	{
-		Dbh db = new Dbh();
-		String selectSql = "SELECT * FROM empdetails WHERE empID = ?";
-		try 
-		{
-			db.connect();
-			PreparedStatement stmt = db.getConnection().prepareStatement(selectSql);
-			stmt.setString(1, Main.empInfo.GetEmpID());
-			
-			ResultSet rs;
-			rs = stmt.executeQuery();
-			
-			
-			while(rs.next())
-			{
-				Main.empInfo.SetEmpID(rs.getString("empID"));
-				Main.empInfo.SetPassword(rs.getString("pass"));
-				Main.empInfo.SetName(rs.getString("name"));
-				Main.empInfo.SetDepartment(rs.getString("department"));
-				Main.empInfo.SetPosition(rs.getString("position"));
-				
-				UserRole userRole;
-				switch(rs.getString("userRole")) 
-				{
-					case "ADMIN" :
-						userRole = UserRole.ADMIN;
-						break;
-					case "USER" :
-						userRole = UserRole.USER;
-						break;
-					default:
-						userRole = UserRole.USER;
-				}
-				
-				Main.empInfo.SetUserRole(userRole);
-				
-				Status status;
-				
-				switch (rs.getString("stat"))
-				{
-					case "ACTIVE":
-						status = Status.ACTIVE;
-						break;
-					case "INACTIVE" :
-						status = Status.INACTIVE;
-						break;
-					default:
-						status = Status.INACTIVE;
-				}
-				
-				Main.empInfo.SetStatus(status);
-				Main.empInfo.SetSuperiorID(rs.getString("superiorID"));
-				System.out.println("Setting profile...");
-				Main.empInfo.displayEmployee();
-				System.out.println("Done set the profile!");
-				this.determineMenu();
-			}
-			
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+		Employee empInfo = this.getEmployee();
+		empInfo.getEmployee("SELECT * FROM empdetails WHERE empID = '" + empInfo.GetEmpID() + "'");
+		Main.empInfo = empInfo.getEmployeeObj();
+		this.determineMenu();
+
 	}
 	
 	public void determineMenu() 
