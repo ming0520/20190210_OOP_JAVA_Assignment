@@ -347,6 +347,8 @@ public class Employee extends Dbh
 				stmt = db.getConnection().prepareStatement(deleteSql);
 				stmt.setString(1,this.GetEmpID());
 				stmt.executeUpdate();
+				stmt.executeUpdate("ALTER TABLE empdetails DROP id");
+				stmt.executeUpdate("ALTER TABLE empdetails ADD id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT");
 				rs.close();
 				stmt.close();
 				db.closeConnection();
