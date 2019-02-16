@@ -81,8 +81,6 @@ public class Main
 							String pass = rs.getString("pass");
 							if(pw.equals(pass)) 
 							{
-								System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-										+ "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 								Main.empInfo.SetPassword(pw);
 								System.out.println("Password correct.");
 								this.setEmployee();
