@@ -3,7 +3,7 @@ package record;
 import database.Dbh;
 import java.sql.*;
 
-public class ClaimType
+public class ClaimType extends Dbh
 {
 	private String claimTypeID;
 	private String claimTypeName;
@@ -75,7 +75,7 @@ public class ClaimType
 	{
 		return limit;
 	}
-	
+
 	public void printClaimType() {
 		System.out.println("=================================================================");
 		System.out.println("                      Claim Type Record");
@@ -87,16 +87,13 @@ public class ClaimType
 		System.out.println("=================================================================");
 	}
 	
-	public void displayClaimType() {
-		String sql = "SELECT * FROM claimtype WHERE ?";
+	public void displayClaimType(String sql) {
 		Dbh db = new Dbh();
 		
 		try {
 			db.connect();
-			PreparedStatement stmt = db.getConnection().prepareStatement(sql);
-			stmt.setString(1, "1");
 			
-			ResultSet rs = stmt.executeQuery();
+			ResultSet rs = db.getStatement().executeQuery(sql);
 			
 			while(rs.next()) {
 				this.claimTypeID = rs.getString("claimTypeID");
@@ -105,9 +102,113 @@ public class ClaimType
 				this.limit = rs.getFloat("claimLimit");
 				this.printClaimType();
 			}
+			db.closeConnection();
+			rs.close();
 			
 		}catch(Exception se) {
 			se.printStackTrace();
 		}
+		
+		
+	}
+	
+	public boolean addClaimType(){
+		boolean flag = false;
+		
+		String selectSql = "SELECT * FROM claimtype WHERE claimTypeID = ?";
+		String insertSql = "INSERT INTO claimtype (claimTypeID, claimTypeName,applicableToPosition,claimLimit)"
+				+ "VALUES (?,?,?,?)";
+		
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			this.connect();
+			stmt = this.getConnection().prepareStatement(selectSql);
+			stmt.setString(1, this.GetClaimTypeID());
+			rs = stmt.executeQuery();
+			rs.last();
+			
+			if(!(rs.getRow() > 0)) {
+				System.out.println("Adding claim type...");
+				stmt = this.getConnection().prepareStatement(insertSql);
+				stmt.setString(1, this.GetClaimTypeID());
+				stmt.setString(2, this.GetClaimTypeName());
+				stmt.setString(3, this.GetApplicableToPosition());
+				stmt.setFloat(4, this.GetLimit());
+				stmt.executeUpdate();
+				System.out.println("Claim type added successfully!");
+				flag = true;
+			}else {
+				System.out.println("The claim type id existed, please try again!");
+				flag = false;
+			}
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			rs.close();
+			stmt.close();
+			this.closeConnection();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return flag;
+	}
+	
+	public boolean editClaimType() {
+		boolean flag = false;
+		String editSql = "UPDATE claimtype SET applicableToPosition=?, claimLimit=? WHERE claimTypeID=?";
+		
+		PreparedStatement stmt;
+		
+		try{
+			
+			this.connect();
+			System.out.println("Updating...");
+			stmt = this.getConnection().prepareStatement(editSql);
+			stmt.setString(1, this.GetApplicableToPosition());
+			stmt.setFloat(2, this.GetLimit());
+			stmt.setString(3,this.GetClaimTypeID());
+			stmt.executeUpdate();
+			this.closeConnection();
+			stmt.close();
+			System.out.println("Updated successfully!");
+			stmt.close();
+			this.closeConnection();
+			flag = true;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+				
+		return flag;
+	}
+	
+	public boolean deleteClaimType() {
+		boolean flag = false;
+			String deleteSql = "DELETE FROM claimtype WHERE claimTypeID=?";
+			
+			PreparedStatement stmt;
+			
+			try {
+				System.out.println("Deleting...");
+				this.connect();
+				stmt = this.getConnection().prepareStatement(deleteSql);
+				stmt.setString(1, this.GetClaimTypeID());
+				stmt.executeUpdate();
+				stmt.executeUpdate("ALTER TABLE claimtype DROP id");
+				stmt.executeUpdate("ALTER TABLE claimtype ADD id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT");
+				System.out.println("Deleted successfully!");
+				this.closeConnection();
+				stmt.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		return flag;
 	}
 }
