@@ -1,10 +1,11 @@
 package control;
 
 import java.sql.*;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import record.Employee;
-import sun.tools.tree.ThisExpression;
 import record.ClaimType;
+import control.User;
 
 import database.Dbh;
 
@@ -113,7 +114,7 @@ public class Admin extends Dbh
 //	 *  
 //	 */
 	public static void adminMenuView()
-	{
+	{	
 		Scanner input = new Scanner(System.in);
 		displayAdminMenu();
 		
@@ -148,7 +149,7 @@ public class Admin extends Dbh
 			case 3: adminClaimView();break;
 			
 		}
-		input.close();
+		
 	}
 	
 	public static void adminEmployeeView()
@@ -157,7 +158,7 @@ public class Admin extends Dbh
 		displayEmployeeMenu();
 		
 		int choice = 0;
-		System.out.print("Enter Choice: ");
+		System.out.print("Enter choice: ");
 		
 		while(true) 
 		{
@@ -178,6 +179,9 @@ public class Admin extends Dbh
 		    {
 		    	System.out.print("Invalid choice! Please try again:");
 		    }
+		    catch(NoSuchElementException nsee) {
+		    	System.out.println("Enter choice: ");
+		    }
 		} 
 		
 		switch(choice)
@@ -189,7 +193,7 @@ public class Admin extends Dbh
 			case 5: searchEmployee();
 			case 6: adminMenuView();
 		}
-		input.close();
+		
 	}
 
 	
@@ -231,7 +235,7 @@ public class Admin extends Dbh
 			case 5: searchClaimType();
 			case 6: adminMenuView();
 		}
-		input.close();
+		
 	}
 	
 	public static void adminClaimView()
@@ -241,7 +245,6 @@ public class Admin extends Dbh
 		
 		int choice = 0;
 		System.out.print("Enter Choice: ");
-		
 		while(true) 
 		{
 		    try 
@@ -272,7 +275,7 @@ public class Admin extends Dbh
 			case 5: displayClaim();
 			case 6: adminMenuView();
 		}
-		input.close();
+		
 	}
 	
 //	/*
@@ -348,7 +351,7 @@ public class Admin extends Dbh
 		newEmp.addEmployee();
 		
 		adminEmployeeView();
-		input.close();
+		
 	}
 	
 	public static void editEmployee()
@@ -409,7 +412,7 @@ public class Admin extends Dbh
 		
 		
 		adminEmployeeView();
-		input.close();
+		
 	}
 	
 	public static void deleteEmployee()
@@ -423,7 +426,7 @@ public class Admin extends Dbh
 		System.out.println("Press <enter> to continue");
 		input.nextLine();
 		adminEmployeeView();
-		input.close();
+		
 	}
 
 	public static void viewEmployee()
@@ -435,7 +438,7 @@ public class Admin extends Dbh
 		System.out.println("Press <enter> to continue...");
 		input.nextLine();
 		adminEmployeeView();
-		input.close();
+		
 	}
 	
 	public static void searchEmployee()
@@ -448,7 +451,7 @@ public class Admin extends Dbh
 		empInfo.getEmployee("SELECT * FROM empdetails WHERE empID = '" + empInfo.GetEmpID().toString() +"'");
 		System.out.println("Searched!");
 		adminEmployeeView();
-		input.close();
+		
 	}
 
 //	/*
@@ -459,10 +462,46 @@ public class Admin extends Dbh
 	
 	public static void addClaimType()
 	{
+		ClaimType newClaimType = new ClaimType();
 		Scanner input = new Scanner(System.in);
+		boolean existedClaimTypeID = true;
 		
-		System.out.print("Claim Type ID: ");
-		String claimTypeID = input.nextLine();
+		do {
+			System.out.print("Claim Type ID: ");
+			String claimTypeID = input.nextLine();
+			
+			Dbh db = new Dbh();
+			try {
+				
+				db.connect();
+				PreparedStatement stmt;
+				ResultSet rs;
+				
+				stmt = db.getConnection().prepareStatement("SELECT * FROM claimtype WHERE claimTypeID=?");
+				stmt.setString(1, claimTypeID);
+				rs = stmt.executeQuery();
+				rs.last();
+				
+				if(rs.getRow() > 0) {
+					existedClaimTypeID = true;
+					System.out.println("The claim type id existed, please try again!");
+					
+				}else {
+					existedClaimTypeID = false;
+					newClaimType.SetClaimTypeID(claimTypeID);
+
+				}
+				
+				db.closeConnection();
+				stmt.close();
+				rs.close();
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}while(existedClaimTypeID == true);
+		
+		
 		System.out.print("Claim Type Name: ");
 		String claimTypeName = input.nextLine();
 		System.out.print("Position: ");
@@ -470,47 +509,131 @@ public class Admin extends Dbh
 		System.out.print("Limit: ");
 		float limit = input.nextFloat();
 		
+		newClaimType.SetClaimTypeName(claimTypeName);
+		newClaimType.SetApplicableToPosition(applicableToPosition);
+		newClaimType.SetLimit(limit);
+		
+		newClaimType.addClaimType();
 		
 		adminClaimTypeView();
-		input.close();
+		
 	}
 	
 	public static void editClaimType()
 	{
 		Scanner input = new Scanner(System.in);
+		Dbh db = new Dbh();
 		
-		System.out.print("Claim Type ID: ");
-		String claimTypeID = input.nextLine();
+		PreparedStatement stmt;
+		ResultSet rs;
+		ClaimType claimType = new ClaimType();
+		
+		boolean isExisted = true;
+		
+		String selectSql = "SELECT * FROM claimtype WHERE claimTypeID=?";
+		
+		do {
+			System.out.print("Claim Type ID: ");
+			String claimTypeID = input.nextLine();
+			
+			try {
+				db.connect();
+				stmt = db.getConnection().prepareStatement(selectSql);
+				stmt.setString(1, claimTypeID); 
+				rs = stmt.executeQuery();
+				rs.last();
+				if(rs.getRow() > 0) {
+					claimType.SetClaimTypeID(claimTypeID);
+					isExisted = true;
+				}else {
+					System.out.println("The claim id is not exist, please try again:");	
+					isExisted = false;
+				}
+				
+				db.closeConnection();
+				rs.close();
+				stmt.close();
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+				
+			
+		}while(isExisted == false);
+		
+		String GCTIDsql = "SELECT * FROM claimtype WHERE claimTypeID = '" 
+		+ claimType.GetClaimTypeID() + "'";
+		claimType.displayClaimType(GCTIDsql);
 		
 		System.out.print("New Position: ");
 		String applicableToPosition = input.nextLine();
 		System.out.print("New Limit: ");
 		float limit = input.nextFloat();
 		
+		claimType.SetApplicableToPosition(applicableToPosition);
+		claimType.SetLimit(limit);
 		
+		claimType.editClaimType();		
 		
 		adminClaimTypeView();
-		input.close();
+		
 	}
 	
 	public static void deleteClaimType()
 	{
 		Scanner input = new Scanner(System.in);
+		Dbh db = new Dbh();
+		ClaimType claimType = new ClaimType();
+		PreparedStatement stmt;
+		ResultSet rs;
 		
-		System.out.print("Claim Type ID: ");
-		String claimTypeID = input.nextLine();
+		boolean isExist = false;
+		
+		do {
+			System.out.print("Claim Type ID: ");
+			String claimTypeID = input.nextLine();
+			claimType.SetClaimTypeID(claimTypeID);
+			
+			try {
+				db.connect();
+				stmt = db.getConnection().prepareStatement("SELECT * FROM claimtype WHERE claimTypeID=?");
+				stmt.setString(1, claimType.GetClaimTypeID());
+				rs = stmt.executeQuery();
+				rs.last();
+				
+				if(rs.getRow() > 0) {
+					stmt = db.getConnection().prepareStatement("SELECT * FROM claimrecord WHERE claimTypeId=?");
+					stmt.setString(1, claimType.GetClaimTypeID());
+					rs = stmt.executeQuery();
+					rs.last();
+					if(rs.getRow() > 0) {
+						System.out.println("The claim type is using in claim record");
+						adminClaimTypeView();
+					}else {						
+						claimType.deleteClaimType();
+						isExist = true;
+					}
+				}else {
+					System.out.println("The claim type does not existed, please try again!");
+					isExist = false;
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}while(isExist == false);
 		
 		
 		
 		adminClaimTypeView();
-		input.close();
+		
 	}
 	
 	public static void viewClaimType()
 	{
 		ClaimType claimType = new ClaimType();
 		
-		claimType.displayClaimType();
+		claimType.displayClaimType("SELECT * FROM claimtype WHERE 1");
 		
 		adminClaimTypeView();
 	}
@@ -518,14 +641,46 @@ public class Admin extends Dbh
 	public static void searchClaimType()
 	{
 		Scanner input = new Scanner(System.in);
+		Dbh db = new Dbh();
+		ClaimType claimType = new ClaimType();
+		PreparedStatement stmt;
+		ResultSet rs;
 		
-		System.out.print("Claim Type ID: ");
-		String claimTypeID = input.nextLine();
-		
-		
+		boolean isExist = false;
+		String selectSql = "SELECT * FROM claimtype WHERE claimTypeID=?";
+		do {
+			System.out.print("Claim Type ID: ");
+			String claimTypeID = input.nextLine();
+			
+			try {
+				claimType.SetClaimTypeID(claimTypeID);
+				db.connect();
+				stmt = db.getConnection().prepareStatement(selectSql);
+				stmt.setString(1, claimType.GetClaimTypeID());
+				rs = stmt.executeQuery();
+				rs.last();
+				
+				if(rs.getRow() > 0) {
+					isExist = true;
+				}else {
+					System.out.println("The claim does not exist, please try again!");
+					isExist = false;
+				}
+				db.closeConnection();
+				stmt.close();
+				rs.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		}while(isExist == false);
+		String delSql = "SELECT * FROM claimtype WHERE claimTypeID = '"
+				+ claimType.GetClaimTypeID() +"'";
+		claimType.displayClaimType(delSql);
 		
 		adminClaimTypeView();
-		input.close();
+		
 	}
 	
 //	/*
@@ -537,30 +692,10 @@ public class Admin extends Dbh
 	public static void applyClaim()
 	{
 		Scanner input = new Scanner(System.in);
-		
-		System.out.print("Employee's ID: ");
-		String empID = input.nextLine();
-		System.out.print("Claim ID: ");
-		String claimID = input.nextLine();
-		System.out.print("Claim Type ID: ");
-		String claimTypeID = input.nextLine();
-		System.out.print("Date: ");
-		String date = input.nextLine();
-		System.out.print("Amount: ");
-		float amount = input.nextFloat();
-		System.out.print("Remark: ");
-		String remark = input.nextLine();
-		System.out.print("Approver ID: ");
-		String approverID = input.nextLine();
-		System.out.print("Status:");
-		String status = input.nextLine();
-		System.out.print("Remark: ");
-		String decisionRemark = input.nextLine();
-		
-
-		
-		adminClaimView();
-		input.close();
+		User.applyUserClaim();
+		System.out.println("Press <enter> to continue... ");
+		input.nextLine();
+		adminMenuView();
 	}
 	
 	public static void editClaim()
@@ -580,7 +715,7 @@ public class Admin extends Dbh
 		
 		
 		adminClaimView();
-		input.close();
+		
 	}
 	
 	public static void approveClaim()
@@ -598,7 +733,7 @@ public class Admin extends Dbh
 		
 		
 		adminClaimView();
-		input.close();
+		
 	}
 	
 	public static void cancelClaim()
@@ -613,7 +748,7 @@ public class Admin extends Dbh
 		
 		
 		adminClaimView();
-		input.close();
+		
 	}
 	
 	public static void displayClaim()
