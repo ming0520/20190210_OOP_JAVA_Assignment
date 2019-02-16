@@ -44,16 +44,16 @@ public class User
 	
 	public static void userClaimView()
 	{
-		Scanner input = new Scanner(System.in);
-		displayUserMenu();
 		
+		displayUserMenu();
+		Scanner input = new Scanner(System.in);
 		int choice = 0;
 		System.out.print("Enter Choice: ");
 		//Check to choice
 		while(true) 
 		{
 		    //Try to get an integer
-		    try 
+		    try
 		    {
 		         choice = Integer.parseInt(input.nextLine());
 		         // The range for the choice
@@ -71,6 +71,7 @@ public class User
 		    {
 		         // not an integer
 		    	System.out.print("Invalid choice! Please try again:");
+		    	return;
 		    }
 		}
 		
@@ -81,12 +82,14 @@ public class User
 			case 3: cancelUserClaim();break;
 			case 4: viewClaim();break;
 		}
-		input.close();
+		
+		userClaimView();
+		
 	}
 	
 	// Claim (User)
 	
-	public static void applyUserClaim()
+	public static boolean applyUserClaim()
 	{
 		Scanner input = new Scanner(System.in);
 		
@@ -120,8 +123,7 @@ public class User
 				System.out.println("Unsuccessful apply for the claim!\nPlease try again");
 			
 			System.out.println("=================================================================");
-			input.close();
-
+			return true;
 	}
 		
 	public static void editUserClaim()
