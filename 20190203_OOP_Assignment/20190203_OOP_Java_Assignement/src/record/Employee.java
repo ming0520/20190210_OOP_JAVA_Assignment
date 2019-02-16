@@ -67,7 +67,7 @@ public class Employee extends Dbh
 	
 	public String GetEmpID()
 	{
-		return empID;
+		return this.empID;
 	}
 	
 	public void SetPassword(String password) 
@@ -77,7 +77,7 @@ public class Employee extends Dbh
 	
 	public String GetPassword()
 	{
-		return password;
+		return this.password;
 	}
 	
 	public void SetName(String name) 
@@ -87,7 +87,7 @@ public class Employee extends Dbh
 	
 	public String GetName()
 	{
-		return name;
+		return this.name;
 	}
 	
 	public void SetDepartment(String department) 
@@ -97,7 +97,7 @@ public class Employee extends Dbh
 	
 	public String GetDepatment()
 	{
-		return department;
+		return this.department;
 	}
 	
 	public void SetPosition(String position) 
@@ -107,7 +107,7 @@ public class Employee extends Dbh
 	
 	public String GetPosition()
 	{
-		return position;
+		return this.position;
 	}
 	
 	public void SetStatus(Status status) 
@@ -117,7 +117,7 @@ public class Employee extends Dbh
 	
 	public Status GetStatus()
 	{
-		return status;
+		return this.status;
 	}
 	
 	public void SetUserRole(UserRole userRole)
@@ -127,7 +127,7 @@ public class Employee extends Dbh
 	
 	public UserRole GetUserRole()
 	{
-		return userRole;
+		return this.userRole;
 	}
 	
 	public void SetSuperiorID(String superiorID) 
@@ -245,7 +245,7 @@ public class Employee extends Dbh
 			}
 			
 			if(counter > 0) {
-				System.out.println("The employee ID existed! Please try again!");
+				System.out.println("The employee ID existed, please try again!");
 				
 				selectEmp.close();
 				rs.close();
@@ -253,7 +253,7 @@ public class Employee extends Dbh
 				
 				return false;
 			}else {
-				
+				System.out.println("Adding...");
 				PreparedStatement insertEmp = db.getConnection().prepareStatement(InsertSql);
 				insertEmp.setString(1, this.GetEmpID());
 				insertEmp.setString(2, this.GetPassword());
@@ -267,6 +267,99 @@ public class Employee extends Dbh
 				System.out.println("Added successfully!");
 				
 			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean editEmployee() {
+		
+		String selectSql = "SELECT empID FROM empdetails WHERE empID = ?";
+		String insertSql = "UPDATE empdetails SET "
+				+ "pass=?, "
+				+ "department=?, position=? "
+				+ "WHERE empID=?";
+		
+		Dbh db = new Dbh();
+		
+		try {
+			db.connect();
+			PreparedStatement stmt;
+			ResultSet rs;
+			
+			stmt = db.getConnection().prepareStatement(selectSql);
+			stmt.setString(1, this.empID);
+			
+			rs = stmt.executeQuery();
+			rs.last();
+			int rowCount = rs.getRow();
+			
+			if(!(rowCount > 0)) {
+				System.out.println("The employee does not exist, please try again!");
+				
+				rs.close();
+				stmt.close();
+				db.closeConnection();
+				
+				return false;
+			}
+			else {
+				System.out.println("Editing...");
+				stmt = db.getConnection().prepareStatement(insertSql);
+				stmt.setString(1, this.GetPassword());
+				stmt.setString(2, this.GetDepatment());	
+				stmt.setString(3, this.GetPosition());
+				stmt.setString(4, this.GetEmpID());
+				stmt.executeUpdate();
+				System.out.println("Edited sucessfully!");
+				rs.close();
+				stmt.close();
+				db.closeConnection();
+				return true;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean deleteEmployee() {
+		String selectSql = "SELECT * FROM empdetails WHERE empID=?";
+		String deleteSql = "DELETE FROM empdetails WHERE empID=?";
+		
+		PreparedStatement stmt;
+		ResultSet rs;
+		Dbh db = new Dbh();
+		
+		try {
+			db.connect();
+			
+			stmt = db.getConnection().prepareStatement(selectSql);
+			stmt.setString(1, this.GetEmpID());
+			rs = stmt.executeQuery();
+			rs.last();
+			
+			if(rs.getRow() > 0) {
+				System.out.println("Deleting...");
+				stmt = db.getConnection().prepareStatement(deleteSql);
+				stmt.setString(1,this.GetEmpID());
+				stmt.executeUpdate();
+				rs.close();
+				stmt.close();
+				db.closeConnection();
+				System.out.println("Deleted successfully!");
+				return true;
+			}else {
+				System.out.println("The employee does not exist, please try again!");
+				rs.close();
+				stmt.close();
+				db.closeConnection();
+				return false;
+			}
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();
