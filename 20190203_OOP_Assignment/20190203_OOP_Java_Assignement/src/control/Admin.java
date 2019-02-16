@@ -1,10 +1,14 @@
 package control;
 
+import java.sql.*;
 import java.util.Scanner;
 import record.Employee;
+import sun.tools.tree.ThisExpression;
 import record.ClaimType;
 
-public class Admin
+import database.Dbh;
+
+public class Admin extends Dbh
 {
 	public final static void clearConsole()
 	{
@@ -34,6 +38,7 @@ public class Admin
  * Return : void
  *  
  */
+
 	public static void main(String[] args) {
 		adminMenuView();
 	}
@@ -349,16 +354,57 @@ public class Admin
 	public static void editEmployee()
 	{
 		Scanner input = new Scanner(System.in);
+		Employee empInfo = new Employee();
+		Dbh db = new Dbh();
 		
-		System.out.print("Employee's ID: ");
-		String empID = input.nextLine();
-		System.out.print("Employee's Password: ");
-		String password = input.nextLine();
+		PreparedStatement stmt;
+		ResultSet rs;
+		boolean isLogin = false;
+		int colCout = 0;
 		
-		System.out.print("New Employee's Department: ");
-		String department = input.nextLine();
-		System.out.print("New Employee's Position: ");
-		String position = input.nextLine();
+		try {
+			db.connect();
+			
+			do {
+				System.out.print("Employee's ID: ");
+				empInfo.SetEmpID(input.nextLine());
+				System.out.print("Employee's Password: ");
+				empInfo.SetPassword(input.nextLine());
+
+				System.out.println(empInfo.GetEmpID() + "\t" + empInfo.GetPassword());
+				
+				stmt = db.getConnection().prepareStatement("SELECT * FROM empdetails WHERE empID=? AND pass = ?");
+				
+				stmt.setString(1, empInfo.GetEmpID().toString());
+				stmt.setString(2, empInfo.GetPassword().toString());
+				
+				rs = stmt.executeQuery();
+				rs.last();
+				
+				if(rs.getRow() > 0) {
+					isLogin = true;
+				}
+				else {
+					System.out.println("Incorrect employee id and password");
+					isLogin = false;
+				}
+				
+			}while(isLogin == false);
+			
+			System.out.print("New Employee's Department: ");
+			empInfo.SetDepartment(input.nextLine());
+			System.out.print("New Employee's Position: ");
+			empInfo.SetPosition(input.nextLine());
+			
+			empInfo.editEmployee();
+			
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
 		
 		
 		
@@ -371,10 +417,11 @@ public class Admin
 		Scanner input = new Scanner(System.in);
 		
 		System.out.print("Employee's ID: ");
-		String empID = input.nextLine();
-		
-		
-		
+		Employee delEmp = new Employee();
+		delEmp.SetEmpID(input.nextLine());
+		delEmp.deleteEmployee();
+		System.out.println("Press <enter> to continue");
+		input.nextLine();
 		adminEmployeeView();
 		input.close();
 	}
@@ -394,12 +441,12 @@ public class Admin
 	public static void searchEmployee()
 	{
 		Scanner input = new Scanner(System.in);
-		
+		Employee empInfo = new Employee();
 		System.out.print("Employee's ID: ");
-		String empID = input.nextLine();
-		
-		
-		
+		empInfo.SetEmpID(input.nextLine());
+		System.out.println("Searching...");
+		empInfo.getEmployee("SELECT * FROM empdetails WHERE empID = '" + empInfo.GetEmpID().toString() +"'");
+		System.out.println("Searched!");
 		adminEmployeeView();
 		input.close();
 	}
