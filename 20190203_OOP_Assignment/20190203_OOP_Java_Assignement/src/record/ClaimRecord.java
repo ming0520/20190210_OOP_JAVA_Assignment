@@ -278,7 +278,6 @@ public class ClaimRecord
 			addRecord.setString(7, this.status.toString());
 			addRecord.setString(8, "ADMIN");
 			addRecord.setString(9, "Submited");
-			System.out.println(addRecord.toString());
 			addRecord.executeUpdate();
 			
 			
