@@ -130,34 +130,66 @@ public class User
 	{
 		Scanner input = new Scanner(System.in);
 		
-		System.out.print("Employee's ID: ");
-		String empID = input.nextLine();
-		System.out.print("Claim Type ID: ");
-		String claimTypeID = input.nextLine();
+		Main main = new Main();
+		Employee empInfo = main.getEmployee();
+		ClaimRecord claimRecord = new ClaimRecord();
 		
+		String empID = empInfo.GetEmpID();
+		claimRecord.SetEmpID(empID);
+		claimRecord.DisplayClaim("SELECT * FROM claimrecord WHERE empID = '" +empID + "'");
 		
-		System.out.print("New Amount: ");
-		float amount = input.nextFloat();
-		System.out.print("New Remark: ");
-		String remark = input.nextLine();
+		System.out.println("Employe ID: " + empID);
 		
+		do {
+			System.out.print("Claim ID: ");
+			String claimID = input.nextLine();
+			claimRecord.SetClaimID(claimID);
+		}while(claimRecord.verifyClaimID() == false);
 		
+		float amount = (float) 0.0;
+		do {
+			System.out.print("New Amount: ");
+			amount = input.nextFloat(); 
+		}while(amount < 0.0);
 		
+		String remark = null;
+		do {
+			System.out.print("New Remark: ");
+			input.nextLine();
+			remark = input.nextLine();
+			if(remark == null) {
+				System.out.print("Please try again,");
+			}
+		}while(remark == null);
+		
+		claimRecord.SetAmount(amount);
+		claimRecord.SetRemark(remark);
+		claimRecord.editClaim();
 		userClaimView();
 		input.close();
 	}
 		
 	public static void cancelUserClaim()
 	{
+		Main main = new Main();
+		Employee empInfo = main.getEmployee();
 		Scanner input = new Scanner(System.in);
+		ClaimRecord claimRecord = new ClaimRecord();
+		claimRecord.DisplayClaim("SELECT * FROM claimrecord WHERE empID ='" + empInfo.GetEmpID() + "'");
+		do {
+			System.out.print("Claim ID: ");
+			String claimID = input.nextLine();
+			claimRecord.SetClaimID(claimID);
+		}while (claimRecord.verifyClaimID() == false);
 		
-		System.out.print("Employee's ID: ");
-		String empID = input.nextLine();
-		System.out.print("Claim ID: ");
-		String claimID = input.nextLine();
+		claimRecord.SetStatus(ClaimStatus.CANCELLED);
 		
+		System.out.print("New decision remark: ");
+		String decisionRemark = input.nextLine();
+		claimRecord.SetDecisionRemark(decisionRemark);
 		
-		
+		claimRecord.approveClaim();
+
 		userClaimView();
 		input.close();
 	}
