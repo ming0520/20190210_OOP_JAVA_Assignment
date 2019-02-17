@@ -8,7 +8,7 @@ import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 
-public class ClaimRecord
+public class ClaimRecord extends Dbh
 {
 	private String claimID;
 	private String empID;
@@ -31,7 +31,7 @@ public class ClaimRecord
 	
 	public static void main(String[] args) {
 		ClaimRecord cr = new ClaimRecord();
-		cr.DisplayClaim("SELECT * FROM claimrecord WHERE empID = 'IMS-S-001' ");
+		cr.DisplayClaim("SELECT * FROM claimrecord WHERE 1 ");
 	}
 	
 	public ClaimRecord()
@@ -152,7 +152,6 @@ public class ClaimRecord
 	public void DisplayClaim(String sql) {
 		Dbh db = new Dbh();
 //		sql = "SELECT * FROM claimrecord WHERE 1";
-		
 		try {
 //			int counter = 0;
 			db.connect();
@@ -167,10 +166,31 @@ public class ClaimRecord
 //			rsRowCount.close();
 			
 			ResultSet rs = db.getStatement().executeQuery(sql);
+			int lineLen = 165;
 			
-			System.out.println("=====================================================================================================================================================================================================================================================");
-			System.out.println("Claim ID \t\t Employee ID \t\t Claim Type ID \t\t Date \t\t\t\t\t Amount \t\t\t Remark \t\t Approver ID \t\t Claim Status \t\t Decision Remark");
-			System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+			for(int i = 0; i < lineLen; i++) {
+				System.out.print("=");
+			}
+			System.out.println("");
+//			System.out.println("Claim ID \t\t "
+//					+ "Employee ID \t\t "
+//					+ "Claim Type ID \t\t "
+//					+ "Date \t\t\t\t\t "
+//					+ "Amount \t\t\t "
+//					+ "Remark \t\t "
+//					+ "Approver ID \t\t "
+//					+ "Claim Status \t\t "
+//					+ "Decision Remark");
+			int counter = 1;
+			System.out.format("%5s %15s %15s %15s %20s %17s %20s %15s %15s %20s",
+					"ID", "CLAIM ID", "EMPLOYEE ID", "CLAIM TYPE ID", "DATE",
+					"AMOUNT", "REMARK", "APPROVER ID","CLAIM STATUS", "DEICISION REMARK");
+			System.out.println();
+			
+			for(int i = 0; i < lineLen; i++) {
+				System.out.print("-");
+			}
+			System.out.println("");
 			
 			while(rs.next()) {
 				String claimId = rs.getString("claimID");
@@ -183,19 +203,30 @@ public class ClaimRecord
 				String claimStatus = rs.getString("claimStatus");
 				String decisionRemark = rs.getString("decisionRemark");
 				
-				System.out.print(claimId.trim() 		+ " \t\t\t ");
-				System.out.print(empId.trim() 			+ " \t\t ");
-				System.out.print(claimTypeId.trim()  	+ " \t\t\t ");
-				System.out.print(date.trim()			+ " \t\t\t ");
-				System.out.print(amount  		+ " \t\t\t ");
-				System.out.print(remark.trim()  		+ " \t\t\t ");
-				System.out.print(approverId.trim()  	+ " \t\t\t ");
-				System.out.print(claimStatus 	+ " \t\t ");
-				System.out.print(decisionRemark);
+//				System.out.print(claimId.trim() 		+ " \t\t\t ");
+//				System.out.print(empId.trim() 			+ " \t\t ");
+//				System.out.print(claimTypeId.trim()  	+ " \t\t\t ");
+//				System.out.print(date.trim()			+ " \t\t\t ");
+//				System.out.print(amount  		+ " \t\t\t ");
+//				System.out.print(remark.trim()  		+ " \t\t\t ");
+//				System.out.print(approverId.trim()  	+ " \t\t\t ");
+//				System.out.print(claimStatus 	+ " \t\t ");
+//				System.out.print(decisionRemark);
+//				System.out.println("");
+				System.out.format("%5s %15s %15s %15s %20s %15.2f %20s %15s %15s %20s",
+						counter++,claimId, empId, claimTypeId, date,
+						amount, remark, approverId,claimStatus, decisionRemark);
 				System.out.println("");
-			System.out.println("......................................................................................................................................................................................................................................................");				
+				
+				for(int i = 0; i < lineLen; i++) {
+					System.out.print("-");
+				}
+				System.out.println("");
 			}
-			System.out.println("======================================================================================================================================================================================================================================================");
+			for(int i = 0; i < lineLen; i++) {
+				System.out.print("=");
+			}
+			System.out.println("");
 
 			rs.close();
 			db.closeConnection();
@@ -292,6 +323,79 @@ public class ClaimRecord
 		
 	}
 	
+	public boolean verifyClaimID() {
+		boolean isVerified = false;
+		String selectSql = "SELECT * FROM claimrecord WHERE claimID = ?";
+		
+		PreparedStatement stmt;
+		ResultSet rs;
+		
+		try {
+			this.connect();
+			stmt = this.getConnection().prepareStatement(selectSql);
+			stmt.setString(1, this.claimID);
+			rs = stmt.executeQuery();
+			rs.last();
+			if(rs.getRow() > 0) {
+				System.out.println("Verified!");
+				isVerified = true;
+			}
+			rs.close();
+			stmt.close();
+			this.closeConnection();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return isVerified;
+	}
+	
+	public boolean editClaim() {
+		boolean isEdit = false;
+		
+		String sql = "UPDATE claimrecord SET amount=?, remark=? WHERE claimID=?";
+		PreparedStatement stmt;
+		try {
+			this.connect();
+			stmt = this.getConnection().prepareStatement(sql);
+			stmt.setFloat(1, this.GetAmount());
+			stmt.setString(2, this.GetRemark());
+			stmt.setString(3, this.GetClaimID());
+			System.out.println("Updating claim...");
+			stmt.executeUpdate();
+			System.out.println("Updated claim successfully !");
+			isEdit = true;
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			isEdit = false;
+		}
+		return isEdit;
+	}
+	
+	public boolean approveClaim () {
+		
+		boolean isApprove = false;
+		String sql = "UPDATE claimrecord SET claimStatus = ?, decisionRemark =? WHERE claimID = ?";
+		
+		PreparedStatement stmt;
+		
+		try {
+			System.out.println("Updating status...");
+			this.connect();
+			stmt = this.getConnection().prepareStatement(sql);
+			stmt.setString(1, this.status.toString());
+			stmt.setString(2, this.decisionRemark);
+			stmt.setString(3, this.claimID);
+			stmt.executeUpdate();
+			System.out.println("Updated status successfully !");
+			isApprove = true;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return isApprove;
+	}
 
 	
 //	public boolean ApplyClaim (ClaimRecord newClaim) {
