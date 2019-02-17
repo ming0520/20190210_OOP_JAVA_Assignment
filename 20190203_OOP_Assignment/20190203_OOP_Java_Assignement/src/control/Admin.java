@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import record.Employee;
+import record.ClaimRecord;
+import record.ClaimRecord.ClaimStatus;
 import record.ClaimType;
 import control.User;
 
@@ -701,19 +703,11 @@ public class Admin extends Dbh
 	public static void editClaim()
 	{
 		Scanner input = new Scanner(System.in);
-		
-		System.out.print("Employee's ID: ");
-		String empID = input.nextLine();
-		System.out.print("Claim ID: ");
-		String claimID = input.nextLine();
-		
-		System.out.print("New Amount: ");
-		float amount = input.nextFloat();
-		System.out.print("New Remark: ");
-		String remark = input.nextLine();
-		
-		
-		
+
+		User.editUserClaim();
+		System.out.println("Press <enter> to continue... ");
+		input.nextLine();
+				
 		adminClaimView();
 		
 	}
@@ -721,16 +715,48 @@ public class Admin extends Dbh
 	public static void approveClaim()
 	{
 		Scanner input = new Scanner(System.in);
+		ClaimRecord claimRecord = new ClaimRecord();
+		claimRecord.DisplayClaim("SELECT * FROM claimrecord WHERE 1");
+		do {
+			System.out.print("Claim ID: ");
+			String claimID = input.nextLine();
+			claimRecord.SetClaimID(claimID);
+		}while (claimRecord.verifyClaimID() == false);
 		
-		System.out.print("Claim ID: ");
-		String claimID = input.nextLine();
+		boolean isStatus = false;
 		
-		System.out.print("New Status: ");
-		String status = input.nextLine();
-		System.out.print("New Remark: ");
+		do {
+			System.out.println("1 - Approved, 2 - Cancelled, 3 - Pending, 4 - Rejected");
+			System.out.print("New Status: ");
+			String choice = input.nextLine();
+			
+			switch(choice) {
+				case "1":
+					claimRecord.SetStatus(ClaimStatus.APPROVED);
+					isStatus = true;
+					break;
+				case "2":
+					claimRecord.SetStatus(ClaimStatus.CANCELLED);
+					isStatus = true;
+					break;
+				case "3":
+					claimRecord.SetStatus(ClaimStatus.PENDING);
+					isStatus = true;
+					break;
+				case "4":
+					claimRecord.SetStatus(ClaimStatus.REJECTED);
+					isStatus = true;
+				default:
+					System.out.println("Invalid choice, please try again!");
+					isStatus = false;
+			}
+		}while(isStatus == false);
+		
+		System.out.print("New decision remark: ");
 		String decisionRemark = input.nextLine();
+		claimRecord.SetDecisionRemark(decisionRemark);
 		
-		
+		claimRecord.approveClaim();
 		
 		adminClaimView();
 		
@@ -739,13 +765,21 @@ public class Admin extends Dbh
 	public static void cancelClaim()
 	{
 		Scanner input = new Scanner(System.in);
+		ClaimRecord claimRecord = new ClaimRecord();
+		claimRecord.DisplayClaim("SELECT * FROM claimrecord WHERE 1");
+		do {
+			System.out.print("Claim ID: ");
+			String claimID = input.nextLine();
+			claimRecord.SetClaimID(claimID);
+		}while (claimRecord.verifyClaimID() == false);
 		
-		System.out.print("Employee's ID: ");
-		String empID = input.nextLine();
-		System.out.print("Claim ID: ");
-		String claimID = input.nextLine();
+		claimRecord.SetStatus(ClaimStatus.CANCELLED);
 		
+		System.out.print("New decision remark: ");
+		String decisionRemark = input.nextLine();
+		claimRecord.SetDecisionRemark(decisionRemark);
 		
+		claimRecord.approveClaim();
 		
 		adminClaimView();
 		
@@ -755,7 +789,9 @@ public class Admin extends Dbh
 	{
 		
 		
-		
+		ClaimRecord claimRecord = new ClaimRecord();
+		claimRecord.DisplayClaim("SELECT * FROM claimrecord WHERE 1");
+		claimRecord = null;
 		
 		adminClaimView();
 	}
